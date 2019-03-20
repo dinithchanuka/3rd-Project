@@ -37,8 +37,12 @@ import shadows from '@material-ui/core/styles/shadows';
       this.setState(state => ({Menu:3}));
     }
     handleSubjectReg = () => {
-      const LecturerReg = this.state.SubjectReg;
+      const SubjectReg = this.state.SubjectReg;
       this.setState(state => ({Menu:4}));
+    }
+    handleCourseReg = () => {
+      const CourseReg = this.state.SubjectReg;
+      this.setState(state => ({Menu:5}));
     }
   
     onCollapse = (collapsed) => {
@@ -50,6 +54,7 @@ import shadows from '@material-ui/core/styles/shadows';
       let StudentRegs;
       let LecturerRegs;
       let SubjectRegs;
+      let CourseRegs;
       if(this.state.Menu===2){
         StudentRegs = (
           <div>
@@ -68,6 +73,13 @@ import shadows from '@material-ui/core/styles/shadows';
         SubjectRegs = (
           <div>
             <SubjectReg></SubjectReg>
+          </div>
+        )
+      }
+      else if(this.state.Menu===5){
+        SubjectRegs = (
+          <div>
+            <CourseReg></CourseReg>
           </div>
         )
       }
@@ -92,6 +104,7 @@ import shadows from '@material-ui/core/styles/shadows';
                 <Menu.Item key="2" onClick={this.handleStudentReg}>Student</Menu.Item>
                 <Menu.Item key="3" onClick={this.handleLectureReg}>Lecturer</Menu.Item>
                 <Menu.Item key="4" onClick={this.handleSubjectReg}>Subjects</Menu.Item>
+                <Menu.Item key="5" onClick={this.handleCourseReg}>Courses</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub2"
@@ -136,6 +149,7 @@ import shadows from '@material-ui/core/styles/shadows';
               {StudentRegs}
               {LecturerRegs}
               {SubjectRegs}
+              {CourseRegs}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith

@@ -3,15 +3,18 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdown
 import Firebase from '../../Components/Firebase/Firebase';
 
 class Subject extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
      name:"",
      code:"",
      lechours:"",
      prachours:"",
-
+     course:"",
+     year:""
     };
+    this.updateInput = this.updateInput.bind(this)
+    this.addSubject = this.addSubject.bind(this)
   }
   updateInput = e => {
     this.setState({
@@ -29,13 +32,17 @@ class Subject extends React.Component {
       name: this.state.name,
       code: this.state.code,
       lechours: this.state.lechours,
-      prachours: this.state.prachours
+      prachours: this.state.prachours,
+      course: this.state.course,
+      year: this.state.year,
     }); 
     this.setState({
       name:"",
       code:"",
       lechours:"",
-      prachours:""
+      prachours:"",
+      course:"",
+      year:"",
     });
   }
     render(){
@@ -121,7 +128,13 @@ class Subject extends React.Component {
                 >
                   Course
               </label>
-              <select className="form-control">
+              <select 
+                className="form-control" 
+                name="course"
+                value={this.state.course}
+                onChange={this.updateInput}
+                >
+                <option value=""></option>
                 <option value="Computer Science">Computer Science</option>
                 <option value="Information System">Information System</option>
               </select>
@@ -133,7 +146,13 @@ class Subject extends React.Component {
                 >
                   Year
               </label>
-              <select className="form-control">
+              <select 
+                className="form-control"
+                name="year"
+                value={this.state.year}
+                onChange={this.updateInput}
+                >
+                <option value=""></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
