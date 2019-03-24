@@ -25,9 +25,7 @@ class Subject extends React.Component {
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
-    // db.settings ({
-    //   timestampsInSnapshots: true
-    // });
+    
     const userRef = db.collection("subjects").add({
       name: this.state.name,
       code: this.state.code,
