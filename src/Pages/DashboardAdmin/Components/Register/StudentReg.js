@@ -1,51 +1,76 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../Components/Firebase/Firebase';
+import Firebase from '../../../../Components/Firebase/Firebase';
+import  Dropdown from '../../../../Components/Dropdown/Dropdown';
 
-class Lecturer extends React.Component {
+class Student extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
      name:"",
-     shortform:"",
-     id:"",
+     regnum:"",
+     index:"",
      email:"",
-     subjects:"",
+     course:"",
+     group:""
     };
     this.updateInput = this.updateInput.bind(this)
-    this.addLecturer = this.addLecturer.bind(this)
+    this.addStudent = this.addStudent.bind(this)
   }
   updateInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  addLecturer = e => {
+  addStudent = e => {
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
     
-    const userRef = db.collection("lecturers").add({
+    const userRef = db.collection("students").add({
       name: this.state.name,
-      shortform: this.state.shortform,
-      id: this.state.id,
+      regnum: this.state.regnum,
+      index: this.state.index,
       email: this.state.email,
-      subjects: this.state.subjects
+      course: this.state.course,
+      group: this.state.group
     }); 
     this.setState({
      name:"",
-     shortform:"",
-     id:"",
+     regnum:"",
+     index:"",
      email:"",
-     subjects:"",
+     course:"",
+     group:""
     });
   }
+
+  getCourses(){
+    var courses = [];
+    const db = Firebase.firestore();
+    db.collection("courses")
+    .onSnapshot(function(courseList) {
+      courseList.forEach(function(doc) {
+          courses.push(doc.data().name);
+      });
+    });
+    return courses;
+  }
+
+  getCoursesList() {
+    const courses = this.getCourses();
+    console.log(courses);
+    return courses.map(course=>{
+      return (<option key={course} value={course}>{course}</option>);
+    })
+  }
+  
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addLecturer}>
+        <form onSubmit={this.addStudent}>
           <MDBRow>
-            <h4>Lecturer Register</h4>
+            <h4>Student Register</h4>
           </MDBRow>
           <MDBRow>
             <MDBCol md="4">
@@ -53,7 +78,7 @@ class Lecturer extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Name
+                Student Name
               </label>
               <input
                 type="text"
@@ -69,15 +94,15 @@ class Lecturer extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Name in Short Form
+                Register Number
               </label>
               <input
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                name="shortform"
+                name="regnum"
                 onChange={this.updateInput}
-                value={this.state.shortform}
+                value={this.state.regnum}
               />
             </MDBCol>
             <MDBCol md="3">
@@ -85,15 +110,15 @@ class Lecturer extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                ID
+                Index Number
               </label>
               <input
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                name="id"
+                name="index"
                 onChange={this.updateInput}
-                value={this.state.id}
+                value={this.state.index}
               />
             </MDBCol>
           </MDBRow>
@@ -120,25 +145,35 @@ class Lecturer extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Subjects
+                Course
             </label>
-            <select  
-              className="form-control"
-              name="subjects"
+            <Dropdown 
+              className="form-control" 
+              name="course" 
+              default="(Please select the course)"
               onChange={this.updateInput}
-              value={this.state.subjects}
-              >
-              <option value=""></option>
-              <option value="Sub1">Sub1</option>
-              <option value="Sub2">Sub2</option>
-            </select>
+              value={this.state.course}
+              dbName="courses"
+              fieldName="name">
+            </Dropdown>
+
             </MDBCol>
             <MDBCol md="2">
             <label
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
-              >  
+              >
+                Group
             </label>
+            <Dropdown 
+              className="form-control" 
+              name="group" 
+              default="(Please select the student group)"
+              onChange={this.updateInput}
+              value={this.state.group}
+              dbName="groups"
+              fieldName="code">
+            </Dropdown>
             </MDBCol>
           </MDBRow>
           <div className="text-center py-4 mt-3">
@@ -182,4 +217,4 @@ class Lecturer extends React.Component {
   }
 }
 
-export default Lecturer;
+export default Student;

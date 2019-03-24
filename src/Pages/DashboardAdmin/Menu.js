@@ -1,12 +1,14 @@
 import React from 'react';
 import { NavLink } from "react-router-dom"; 
 
-import StudentReg from './StudentReg';
-import LecturerReg from './LecturerReg';
-import SubjectReg from './SubjectReg';
-import CourseReg from './CourseReg' ;
-import GroupReg from './GroupReg';
-import StudentSearch from './StudentSearch';
+import StudentReg from './Components/Register/StudentReg';
+import LecturerReg from './Components/Register/LecturerReg';
+import SubjectReg from './Components/Register/SubjectReg';
+import CourseReg from './Components/Register/CourseReg' ;
+import GroupReg from './Components/Register/GroupReg';
+import StudentSearch from './Components/UserDetails/StudentSearch';
+import LecturerSearch from './Components/UserDetails/LecturerSearch';
+import SubjectSearch from './Components/UserDetails/SubjectSearch';
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -49,6 +51,18 @@ import shadows from '@material-ui/core/styles/shadows';
       const GroupReg = this.state.GroupReg;
       this.setState(state => ({Menu:6}));
     }
+    handleStudentSearch = () => {
+      const StudentSearch = this.state.StudentSearch;
+      this.setState(state => ({Menu:7}));
+    }
+    handleLecturerSearch = () => {
+      const LecturerSearch = this.state.LecturerSearch;
+      this.setState(state => ({Menu:8}));
+    }
+    handleSubjectSearch = () => {
+      const SubjectSearch = this.state.SubjectSearch;
+      this.setState(state => ({Menu:9}));
+    }
   
     onCollapse = (collapsed) => {
       console.log(collapsed);
@@ -56,11 +70,9 @@ import shadows from '@material-ui/core/styles/shadows';
     }
   
     render() {
-      let StudentRegs;
-      let LecturerRegs;
-      let SubjectRegs;
-      let CourseRegs;
-      let GroupRegs;
+      let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
+      let StudentSearchs,LecturerSearchs,SubjectSearchs;
+      
       if(this.state.Menu===2){
         StudentRegs = (
           <div>
@@ -83,16 +95,37 @@ import shadows from '@material-ui/core/styles/shadows';
         )
       }
       else if(this.state.Menu===5){
-        SubjectRegs = (
+        CourseRegs = (
           <div>
             <CourseReg></CourseReg>
           </div>
         )
       }
       else if(this.state.Menu===6){
-        SubjectRegs = (
+        GroupRegs = (
           <div>
             <GroupReg></GroupReg>
+          </div>
+        )
+      }
+      else if(this.state.Menu===7){
+        StudentSearchs = (
+          <div>
+            <StudentSearch></StudentSearch>
+          </div>
+        )
+      }
+      else if(this.state.Menu===8){
+        LecturerSearchs = (
+          <div>
+            <LecturerSearch></LecturerSearch>
+          </div>
+        )
+      }
+      else if(this.state.Menu===9){
+        SubjectSearchs = (
+          <div>
+            <SubjectSearch></SubjectSearch>
           </div>
         )
       }
@@ -124,9 +157,9 @@ import shadows from '@material-ui/core/styles/shadows';
                 key="sub2"
                 title={<span><Icon type="user" /><span>Users</span></span>}
               >
-                <Menu.Item key="5">Student</Menu.Item>
-                <Menu.Item key="6">Lecturer</Menu.Item>
-                <Menu.Item key="7">Subjects</Menu.Item>
+                <Menu.Item key="7" onClick={this.handleStudentSearch}>Student</Menu.Item>
+                <Menu.Item key="8" onClick={this.handleLecturerSearch}>Lecturer</Menu.Item>
+                <Menu.Item key="9" onClick={this.handleSubjectSearch}>Subjects</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub3"
@@ -160,6 +193,9 @@ import shadows from '@material-ui/core/styles/shadows';
               {SubjectRegs}
               {CourseRegs}
               {GroupRegs}
+              {StudentSearchs}
+              {LecturerSearchs}
+              {SubjectSearchs}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith

@@ -1,76 +1,62 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../Components/Firebase/Firebase';
-import  Dropdown from './Components/Dropdown';
+import Firebase from '../../../../Components/Firebase/Firebase';
+import  Dropdown from '../../../../Components/Dropdown/DropdownMultiple';
+//import { Select } from 'antd';
 
-class Student extends React.Component {
+class Lecturer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
      name:"",
-     regnum:"",
-     index:"",
+     shortform:"",
+     id:"",
      email:"",
-     degree:"",
-     year:""
+     subjects:[],
     };
     this.updateInput = this.updateInput.bind(this)
-    this.addStudent = this.addStudent.bind(this)
+    this.addLecturer = this.addLecturer.bind(this)
   }
+
   updateInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  addStudent = e => {
+
+  addLecturer = e => {
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
     
-    const userRef = db.collection("students").add({
+    const userRef = db.collection("lecturers").add({
       name: this.state.name,
-      regnum: this.state.regnum,
-      index: this.state.index,
+      shortform: this.state.shortform,
+      id: this.state.id,
       email: this.state.email,
-      degree: this.state.degree,
-      year: this.state.year
+      subjects: this.state.subjects
     }); 
     this.setState({
      name:"",
-     regnum:"",
-     index:"",
+     shortform:"",
+     id:"",
      email:"",
-     degree:"",
-     year:""
+     subjects:[],
     });
   }
 
-  getCourses(){
-    var courses = [];
-    const db = Firebase.firestore();
-    db.collection("courses")
-    .onSnapshot(function(courseList) {
-      courseList.forEach(function(doc) {
-          courses.push(doc.data().name);
-      });
-    });
-    return courses;
-  }
-
-  getCoursesList() {
-    const courses = this.getCourses();
-    console.log(courses);
-    return courses.map(course=>{
-      return (<option key={course} value={course}>{course}</option>);
-    })
+  handleChange(value) {
+    const subjects = this.state.subjects;
+    subjects.push('${value}');
+    this.setState({ subjects });
   }
   
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addStudent}>
+        <form onSubmit={this.addLecturer}>
           <MDBRow>
-            <h4>Student Register</h4>
+            <h4>Lecturer Register</h4>
           </MDBRow>
           <MDBRow>
             <MDBCol md="4">
@@ -78,7 +64,7 @@ class Student extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Student Name
+                Name
               </label>
               <input
                 type="text"
@@ -94,15 +80,15 @@ class Student extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Register Number
+                Name in Short Form
               </label>
               <input
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                name="regnum"
+                name="shortform"
                 onChange={this.updateInput}
-                value={this.state.regnum}
+                value={this.state.shortform}
               />
             </MDBCol>
             <MDBCol md="3">
@@ -110,15 +96,15 @@ class Student extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Index Number
+                ID
               </label>
               <input
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                name="index"
+                name="id"
                 onChange={this.updateInput}
-                value={this.state.index}
+                value={this.state.id}
               />
             </MDBCol>
           </MDBRow>
@@ -145,50 +131,25 @@ class Student extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Degree
+                Subjects
             </label>
-            {/* <select 
-              className="form-control" multiple
-              name="degree"
-              value={this.state.degree}
-              onChange={this.updateInput}
-              >
-              <option value="Computer Science">Computer Science</option>
-              <option value="Information System">Information System</option>
-            </select> */}
-            {/* <select 
-              className="form-control" 
-              name="degree"
-              value={this.state.degree}
-              onChange={this.updateInput}>
-              {this.getCoursesList()}
-            </select> */}
-            <Dropdown 
-              className="form-control" 
-              name="degree" 
-              default="(Please select the degree)"
-              onChange={this.updateInput}
-              dbName="courses"
-              fieldName="name"/>
+            <Dropdown
+              mode="multiple"
+              style={{ width: '100%' }}
+              placeholder="Please Select"
+              onChange={(val) => this.handleChange(val)}
+              dbName="subjects"
+              fieldName="code">
+            >
+
+            </Dropdown>
             </MDBCol>
             <MDBCol md="2">
             <label
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
-              >
-                Group
+              >  
             </label>
-            <select 
-              className="form-control"
-              name="year"
-              value={this.state.year}
-              onChange={this.updateInput}
-              >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
             </MDBCol>
           </MDBRow>
           <div className="text-center py-4 mt-3">
@@ -232,4 +193,4 @@ class Student extends React.Component {
   }
 }
 
-export default Student;
+export default Lecturer;
