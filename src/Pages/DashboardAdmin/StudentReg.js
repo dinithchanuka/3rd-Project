@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../Components/Firebase/Firebase';
+import  Dropdown from './Components/Dropdown';
 
 class Student extends React.Component {
   constructor(props) {
@@ -43,6 +44,27 @@ class Student extends React.Component {
      year:""
     });
   }
+
+  getCourses(){
+    var courses = [];
+    const db = Firebase.firestore();
+    db.collection("courses")
+    .onSnapshot(function(courseList) {
+      courseList.forEach(function(doc) {
+          courses.push(doc.data().name);
+      });
+    });
+    return courses;
+  }
+
+  getCoursesList() {
+    const courses = this.getCourses();
+    console.log(courses);
+    return courses.map(course=>{
+      return (<option key={course} value={course}>{course}</option>);
+    })
+  }
+  
   render(){
     return (
       <MDBContainer>
@@ -134,17 +156,20 @@ class Student extends React.Component {
               <option value="Computer Science">Computer Science</option>
               <option value="Information System">Information System</option>
             </select> */}
-            <select 
+            {/* <select 
               className="form-control" 
               name="degree"
               value={this.state.degree}
-              onChange={this.updateInput} multiple>
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-
+              onChange={this.updateInput}>
+              {this.getCoursesList()}
+            </select> */}
+            <Dropdown 
+              className="form-control" 
+              name="degree" 
+              default="(Please select the degree)"
+              onChange={this.updateInput}
+              dbName="courses"
+              fieldName="name"/>
             </MDBCol>
             <MDBCol md="2">
             <label
