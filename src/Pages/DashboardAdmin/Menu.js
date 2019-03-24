@@ -5,6 +5,7 @@ import StudentReg from './StudentReg';
 import LecturerReg from './LecturerReg';
 import SubjectReg from './SubjectReg';
 import CourseReg from './CourseReg' ;
+import GroupReg from './GroupReg';
 import StudentSearch from './StudentSearch';
 
 import {
@@ -44,6 +45,10 @@ import shadows from '@material-ui/core/styles/shadows';
       const CourseReg = this.state.SubjectReg;
       this.setState(state => ({Menu:5}));
     }
+    handleGroupReg = () => {
+      const GroupReg = this.state.GroupReg;
+      this.setState(state => ({Menu:6}));
+    }
   
     onCollapse = (collapsed) => {
       console.log(collapsed);
@@ -55,6 +60,7 @@ import shadows from '@material-ui/core/styles/shadows';
       let LecturerRegs;
       let SubjectRegs;
       let CourseRegs;
+      let GroupRegs;
       if(this.state.Menu===2){
         StudentRegs = (
           <div>
@@ -83,6 +89,13 @@ import shadows from '@material-ui/core/styles/shadows';
           </div>
         )
       }
+      else if(this.state.Menu===6){
+        SubjectRegs = (
+          <div>
+            <GroupReg></GroupReg>
+          </div>
+        )
+      }
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -105,6 +118,7 @@ import shadows from '@material-ui/core/styles/shadows';
                 <Menu.Item key="3" onClick={this.handleLectureReg}>Lecturer</Menu.Item>
                 <Menu.Item key="4" onClick={this.handleSubjectReg}>Subjects</Menu.Item>
                 <Menu.Item key="5" onClick={this.handleCourseReg}>Courses</Menu.Item>
+                <Menu.Item key="6" onClick={this.handleGroupReg}>Groups</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub2"
@@ -141,15 +155,11 @@ import shadows from '@material-ui/core/styles/shadows';
               Logged as a Admin
             </Header>
             <Content style={{ margin: '0 16px' }}>
-              {/* <StudentReg></StudentReg> */}
-              {/* <LecturerReg></LecturerReg> */}
-              {/* <SubjectReg></SubjectReg> */}
-              {/* <CourseReg></CourseReg> */}
-              {/* <StudentSearch></StudentSearch> */}
               {StudentRegs}
               {LecturerRegs}
               {SubjectRegs}
               {CourseRegs}
+              {GroupRegs}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith

@@ -2,58 +2,48 @@ import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../Components/Firebase/Firebase';
 
-class Lecturer extends React.Component {
-  constructor(props) {
-    super(props);
+class Group extends React.Component {
+  constructor() {
+    super();
     this.state = {
      name:"",
-     shortform:"",
-     id:"",
-     email:"",
-     subjects:"",
+     code:"",
     };
-    this.updateInput = this.updateInput.bind(this)
-    this.addLecturer = this.addLecturer.bind(this)
   }
   updateInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  addLecturer = e => {
+  addCourse = e => {
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
     
-    const userRef = db.collection("lecturers").add({
+    const userRef = db.collection("groups").add({
       name: this.state.name,
-      shortform: this.state.shortform,
-      id: this.state.id,
-      email: this.state.email,
-      subjects: this.state.subjects
+      code: this.state.code,
     }); 
     this.setState({
-     name:"",
-     shortform:"",
-     id:"",
-     email:"",
-     subjects:"",
+      name:"",
+      code:"",
     });
   }
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addLecturer}>
+        <form onSubmit={this.addCourse}>
           <MDBRow>
-            <h4>Lecturer Register</h4>
+            <h4>Student Group Register</h4>
           </MDBRow>
+          <br></br>
           <MDBRow>
-            <MDBCol md="4">
+            <MDBCol md="7">
               <label
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Name
+                Group Name
               </label>
               <input
                 type="text"
@@ -69,78 +59,20 @@ class Lecturer extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Name in Short Form
+                Group Code
               </label>
               <input
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                name="shortform"
+                name="code"
                 onChange={this.updateInput}
-                value={this.state.shortform}
-              />
-            </MDBCol>
-            <MDBCol md="3">
-              <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                ID
-              </label>
-              <input
-                type="text"
-                id="defaultFormCardNameEx"
-                className="form-control"
-                name="id"
-                onChange={this.updateInput}
-                value={this.state.id}
+                value={this.state.code}
               />
             </MDBCol>
           </MDBRow>
           <br></br>
-          <MDBRow>
-            <MDBCol md="5">
-            <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Email
-              </label>
-              <input
-                type="text"
-                id="defaultFormCardNameEx"
-                className="form-control"
-                name="email"
-                onChange={this.updateInput}
-                value={this.state.email}
-              />
-            </MDBCol>
-            <MDBCol md="3">
-            <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Subjects
-            </label>
-            <select  
-              className="form-control"
-              name="subjects"
-              onChange={this.updateInput}
-              value={this.state.subjects}
-              >
-              <option value=""></option>
-              <option value="Sub1">Sub1</option>
-              <option value="Sub2">Sub2</option>
-            </select>
-            </MDBCol>
-            <MDBCol md="2">
-            <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >  
-            </label>
-            </MDBCol>
-          </MDBRow>
+          
           <div className="text-center py-4 mt-3">
             <MDBBtn className="btn btn-outline-purple" type="submit">
               Register
@@ -154,6 +86,7 @@ class Lecturer extends React.Component {
           <MDBRow>
             <h4>Bulk Registration</h4>
           </MDBRow>
+          <br></br>
           <MDBRow>
             <MDBCol md="5">
               <h6>Dowload the tempalate and Upload here . . .</h6>
@@ -182,4 +115,4 @@ class Lecturer extends React.Component {
   }
 }
 
-export default Lecturer;
+export default Group;
