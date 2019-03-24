@@ -1,6 +1,7 @@
 import React from 'react';
 
-import firebase from '../../../Components/Firebase/Firebase';
+import firebase from '../Firebase/Firebase';
+import { Select } from 'antd';
 
 class Dropdown extends React.Component {
     constructor(props) {
@@ -15,29 +16,26 @@ class Dropdown extends React.Component {
 
                 [this.props.fieldName]);
             });
-            this.setState({ items: [this.props.default, ...items] });
+            this.setState({ items });
         });
         
     }
 
     render() {
         const list = this.state.items.map((item, i) => {
-            if (i === 0) {
-                return <option key={item.toString()} value="">{item}</option>
-            }
             return <option key={item.toString()} value={item.toString()}>{item.toString()}</option>
         });
 
         return (
-            <select 
-              className={this.props.className}
-              name={this.props.name}
-              defaultValue={0}
+            <Select
+              mode={this.props.mode}
+              style={this.props.style}
               placeholder={this.props.default}
               onChange={this.props.onChange}>
                 {list}
-            </select>
+            </Select>
         );
+        
     }
 }
 export default Dropdown;

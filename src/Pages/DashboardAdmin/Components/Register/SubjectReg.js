@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../Components/Firebase/Firebase';
+import Firebase from '../../../../Components/Firebase/Firebase';
+import  Dropdown from '../../../../Components/Dropdown/Dropdown';
 
 class Subject extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Subject extends React.Component {
      lechours:"",
      prachours:"",
      course:"",
-     year:""
+     group:""
     };
     this.updateInput = this.updateInput.bind(this)
     this.addSubject = this.addSubject.bind(this)
@@ -32,7 +33,7 @@ class Subject extends React.Component {
       lechours: this.state.lechours,
       prachours: this.state.prachours,
       course: this.state.course,
-      year: this.state.year,
+      group: this.state.group,
     }); 
     this.setState({
       name:"",
@@ -40,7 +41,7 @@ class Subject extends React.Component {
       lechours:"",
       prachours:"",
       course:"",
-      year:"",
+      group:"",
     });
   }
     render(){
@@ -126,36 +127,34 @@ class Subject extends React.Component {
                 >
                   Course
               </label>
-              <select 
+              <Dropdown 
                 className="form-control" 
-                name="course"
-                value={this.state.course}
+                name="course" 
+                default="(Please select the course)"
                 onChange={this.updateInput}
-                >
-                <option value=""></option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Information System">Information System</option>
-              </select>
+                value={this.state.course}
+                dbName="courses"
+                fieldName="code">
+              </Dropdown>
+
               </MDBCol>
               <MDBCol md="2">
               <label
                   htmlFor="defaultFormCardNameEx"
                   className="grey-text font-weight-light"
                 >
-                  Year
+                  Group
               </label>
-              <select 
-                className="form-control"
-                name="year"
-                value={this.state.year}
+              <Dropdown 
+                className="form-control" 
+                name="course" 
+                default="(Please select the course)"
                 onChange={this.updateInput}
-                >
-                <option value=""></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+                value={this.state.group}
+                dbName="groups"
+                fieldName="code">
+              </Dropdown>
+
               </MDBCol>
             </MDBRow>
             <div className="text-center py-4 mt-3">
