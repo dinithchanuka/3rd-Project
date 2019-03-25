@@ -4,26 +4,13 @@ import {MDBRow, MDBCol, MDBContainer} from 'mdbreact';
 
 const Search = Input.Search;
 
-const SearchPage = () => {
+const GroupSearch = () => {
   return (
     <MDBContainer>
       <MDBRow>
         <MDBCol md ="4">
         <label>
-            Search by Reg Num
-        </label>
-        <br></br>
-        <Search
-          placeholder="input search text"
-          enterButton="Search"
-          size="large"
-          onSearch={value => console.log(value)}>
-        </Search>
-        </MDBCol>
-
-        <MDBCol md="4">
-        <label>
-            Search by Index Num
+            Search by Code
         </label>
         <br></br>
         <Search
@@ -38,4 +25,4 @@ const SearchPage = () => {
   );
 }
 
-export default SearchPage;
+export default GroupSearch;

@@ -1,17 +1,40 @@
 import React from "react";
-import { MDBCol, MDBFormInline, MDBBtn,MDBIcon } from "mdbreact";
+import { Input } from 'antd';
+import {MDBRow, MDBCol, MDBContainer} from 'mdbreact';
+
+const Search = Input.Search;
 
 const SearchPage = () => {
   return (
-    <MDBCol md="12">
-      <MDBFormInline className="md-form mr-auto mb-4">
-        <input className="form-control mr-sm-2" type="text" placeholder="Search by Index" aria-label="Search" />
-        <MDBBtn className="btn btn-outline-purple" type="submit">
-            Search
-          <MDBIcon far icon="paper-plane" className="ml-2" />
-          </MDBBtn>
-      </MDBFormInline>
-    </MDBCol>
+    <MDBContainer>
+      <MDBRow>
+        <MDBCol md ="4">
+        <label>
+            Search by ID
+        </label>
+        <br></br>
+        <Search
+          placeholder="input search text"
+          enterButton="Search"
+          size="large"
+          onSearch={value => console.log(value)}>
+        </Search>
+        </MDBCol>
+
+        <MDBCol md="4">
+        <label>
+            Search by Short Form
+        </label>
+        <br></br>
+        <Search
+          placeholder="input search text"
+          enterButton="Search"
+          size="large"
+          onSearch={value => console.log(value)}>
+        </Search>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
   );
 }
 
