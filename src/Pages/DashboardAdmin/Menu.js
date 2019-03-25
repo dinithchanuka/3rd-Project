@@ -6,9 +6,11 @@ import LecturerReg from './Components/Register/LecturerReg';
 import SubjectReg from './Components/Register/SubjectReg';
 import CourseReg from './Components/Register/CourseReg' ;
 import GroupReg from './Components/Register/GroupReg';
-import StudentSearch from './Components/UserDetails/StudentSearch';
-import LecturerSearch from './Components/UserDetails/LecturerSearch';
-import SubjectSearch from './Components/UserDetails/SubjectSearch';
+import StudentDetails from './Components/UserDetails/StudentDetails';
+import LecturerDetails from './Components/UserDetails/LecturerDetails';
+import SubjectDetails from './Components/UserDetails/SubjectDetails';
+import GroupDetails from './Components/UserDetails/GroupDetails';
+import CourseDetails from './Components/UserDetails/CourseDetails';
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -51,17 +53,25 @@ import shadows from '@material-ui/core/styles/shadows';
       const GroupReg = this.state.GroupReg;
       this.setState(state => ({Menu:6}));
     }
-    handleStudentSearch = () => {
-      const StudentSearch = this.state.StudentSearch;
+    handleStudentDetails = () => {
+      const StudentDetails = this.state.StudentDetails;
       this.setState(state => ({Menu:7}));
     }
-    handleLecturerSearch = () => {
-      const LecturerSearch = this.state.LecturerSearch;
+    handleLecturerDetails = () => {
+      const LecturerDetails = this.state.LecturerDetails;
       this.setState(state => ({Menu:8}));
     }
-    handleSubjectSearch = () => {
-      const SubjectSearch = this.state.SubjectSearch;
+    handleSubjectDetails = () => {
+      const SubjectDetails = this.state.SubjectDetails;
       this.setState(state => ({Menu:9}));
+    }
+    handleGroupDetails = () => {
+      const GroupDetails = this.state.GroupDetails;
+      this.setState(state => ({Menu:10}));
+    }
+    handleCourseDetails = () => {
+      const CourseDetails = this.state.CourseDetails;
+      this.setState(state => ({Menu:11}));
     }
   
     onCollapse = (collapsed) => {
@@ -71,7 +81,7 @@ import shadows from '@material-ui/core/styles/shadows';
   
     render() {
       let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
-      let StudentSearchs,LecturerSearchs,SubjectSearchs;
+      let StudentDetailss,LecturerDetailss,SubjectDetailss,GroupDetailss,CourseDetailss;
       
       if(this.state.Menu===2){
         StudentRegs = (
@@ -109,23 +119,37 @@ import shadows from '@material-ui/core/styles/shadows';
         )
       }
       else if(this.state.Menu===7){
-        StudentSearchs = (
+        StudentDetailss = (
           <div>
-            <StudentSearch></StudentSearch>
+            <StudentDetails/>
           </div>
         )
       }
       else if(this.state.Menu===8){
-        LecturerSearchs = (
+        LecturerDetailss = (
           <div>
-            <LecturerSearch></LecturerSearch>
+            <LecturerDetails/>
           </div>
         )
       }
       else if(this.state.Menu===9){
-        SubjectSearchs = (
+        SubjectDetailss = (
           <div>
-            <SubjectSearch></SubjectSearch>
+            <SubjectDetails/>
+          </div>
+        )
+      }
+      else if(this.state.Menu===10){
+        GroupDetailss = (
+          <div>
+            <GroupDetails></GroupDetails>
+          </div>
+        )
+      }
+      else if(this.state.Menu===11){
+        CourseDetailss = (
+          <div>
+            <CourseDetails></CourseDetails>
           </div>
         )
       }
@@ -157,9 +181,11 @@ import shadows from '@material-ui/core/styles/shadows';
                 key="sub2"
                 title={<span><Icon type="user" /><span>Users</span></span>}
               >
-                <Menu.Item key="7" onClick={this.handleStudentSearch}>Student</Menu.Item>
-                <Menu.Item key="8" onClick={this.handleLecturerSearch}>Lecturer</Menu.Item>
-                <Menu.Item key="9" onClick={this.handleSubjectSearch}>Subjects</Menu.Item>
+                <Menu.Item key="7" onClick={this.handleStudentDetails}>Student</Menu.Item>
+                <Menu.Item key="8" onClick={this.handleLecturerDetails}>Lecturer</Menu.Item>
+                <Menu.Item key="9" onClick={this.handleSubjectDetails}>Subjects</Menu.Item>
+                <Menu.Item key="10" onClick={this.handleGroupDetails}>Groups</Menu.Item>
+                <Menu.Item key="11" onClick={this.handleCourseDetails}>Course</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub3"
@@ -193,9 +219,11 @@ import shadows from '@material-ui/core/styles/shadows';
               {SubjectRegs}
               {CourseRegs}
               {GroupRegs}
-              {StudentSearchs}
-              {LecturerSearchs}
-              {SubjectSearchs}
+              {StudentDetailss}
+              {LecturerDetailss}
+              {SubjectDetailss}
+              {GroupDetailss}
+              {CourseDetailss}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith
