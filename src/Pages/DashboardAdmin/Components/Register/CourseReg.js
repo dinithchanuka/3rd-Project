@@ -49,7 +49,7 @@ class Course extends React.Component {
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                // name="name"
+                name="name"
                 onChange={this.updateInput}
                 value={this.state.name}
               />

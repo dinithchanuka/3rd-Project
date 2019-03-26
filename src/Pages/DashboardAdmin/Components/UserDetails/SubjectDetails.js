@@ -1,6 +1,7 @@
 import React from "react";
 import {MDBRow, MDBCol, MDBContainer} from 'mdbreact';
 import SubjectSearch from './SubjectSearch';
+import SubjectTable from './SubjectTable';
 
 
 const SubjectDetails = () => {
@@ -11,6 +12,7 @@ const SubjectDetails = () => {
         <br></br>
       </MDBRow>
       <SubjectSearch/>
+      <SubjectTable/>
     </MDBContainer>
   );
 }

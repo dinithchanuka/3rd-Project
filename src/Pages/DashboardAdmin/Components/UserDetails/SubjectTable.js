@@ -20,9 +20,9 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 let counter = 0;
-function createData(num,name,code) {
+function createData(name, code, prachours, lechours, course, group) {
   counter += 1;
-  return { id: counter,num,name,code};
+  return { id: counter, name, code, prachours, lechours, course, group };
 }
 
 function desc(a, b, orderBy) {
@@ -50,10 +50,12 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'num', numeric: false, disablePadding: true, label: 'Number' },
-  { id: 'name', numeric: false, disablePadding: true, label: 'Course Name' },
-  { id: 'code', numeric: false, disablePadding: true, label: 'Course Code' },
-
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'code', numeric: false, disablePadding: false, label: 'Code' },
+  { id: 'lechours', numeric: true, disablePadding: false, label: 'Lectutures (Hours)' },
+  { id: 'prachours', numeric: true, disablePadding: false, label: 'Practicle (Hours)' },
+  { id: 'course', numeric: true, disablePadding: false, label: 'Course' },
+  { id: 'group', numeric: true, disablePadding: false, label: 'Group' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -155,7 +157,7 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Courses
+            Nutrition
           </Typography>
         )}
       </div>
@@ -199,13 +201,13 @@ const styles = theme => ({
   },
 });
 
-class CourseTable extends React.Component {
+class SubjectTable extends React.Component {
   state = {
     order: 'asc',
     orderBy: 'calories',
     selected: [],
     data: [
-      createData('Cupcake', 305, 3),
+      createData('Cupcake', 305, 3.7, 67, 4.3,45),
       createData('Donut', 452, 25.0, 51, 4.9),
       createData('Eclair', 262, 16.0, 24, 6.0),
       createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
@@ -310,10 +312,13 @@ class CourseTable extends React.Component {
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {n.num}
+                        {n.name}
                       </TableCell>
-                      <TableCell align="left">{n.name}</TableCell>
-                      <TableCell align="left">{n.code}</TableCell>
+                      <TableCell align="right">{n.code}</TableCell>
+                      <TableCell align="right">{n.lechours}</TableCell>
+                      <TableCell align="right">{n.prachours}</TableCell>
+                      <TableCell align="right">{n.course}</TableCell>
+                      <TableCell align="right">{n.group}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -345,8 +350,8 @@ class CourseTable extends React.Component {
   }
 }
 
-CourseTable.propTypes = {
+SubjectTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CourseTable);
+export default withStyles(styles)(SubjectTable);
