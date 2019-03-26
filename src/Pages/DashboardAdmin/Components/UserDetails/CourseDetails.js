@@ -12,6 +12,7 @@ const CourseDetails = () => {
         <br></br>
       </MDBRow>
       <CourseSearch/>
+      <hr></hr>
       <CourseTable/>
     </MDBContainer>
   );
