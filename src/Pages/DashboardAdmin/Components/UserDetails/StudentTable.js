@@ -18,11 +18,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { getData } from '../../../../Components/ToTable/ToTable';
+import Firebase from '../../../../Components/Firebase/Firebase';
 
 let counter = 0;
-function createData(num,name,code) {
+function createData(name,regnum,index,email,course,group) {
   counter += 1;
-  return { id: counter,num,name,code};
+  return { id: counter,name,regnum,index,email,course,group};
 }
 
 function desc(a, b, orderBy) {
@@ -50,9 +52,13 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'num', numeric: false, disablePadding: true, label: 'Number' },
-  { id: 'name', numeric: false, disablePadding: true, label: 'Course Name' },
-  { id: 'code', numeric: false, disablePadding: true, label: 'Course Code' },
+
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'regnum', numeric: false, disablePadding: true, label: 'Reg Num' },
+  { id: 'index', numeric: false, disablePadding: true, label: 'Index' },
+  { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
+  { id: 'course', numeric: false, disablePadding: true, label: 'Course' },
+  { id: 'group', numeric: false, disablePadding: true, label: 'Group' },
 
 ];
 
@@ -155,7 +161,7 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Courses
+            Students
           </Typography>
         )}
       </div>
@@ -199,29 +205,24 @@ const styles = theme => ({
   },
 });
 
-class CourseTable extends React.Component {
-  state = {
-    order: 'asc',
-    orderBy: 'calories',
-    selected: [],
-    data: [
-      createData('Cupcake', 305, 3),
-      createData('Donut', 452, 25.0, 51, 4.9),
-      createData('Eclair', 262, 16.0, 24, 6.0),
-      createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-      createData('Gingerbread', 356, 16.0, 49, 3.9),
-      createData('Honeycomb', 408, 3.2, 87, 6.5),
-      createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-      createData('Jelly Bean', 375, 0.0, 94, 0.0),
-      createData('KitKat', 518, 26.0, 65, 7.0),
-      createData('Lollipop', 392, 0.2, 98, 0.0),
-      createData('Marshmallow', 318, 0, 81, 2.0),
-      createData('Nougat', 360, 19.0, 9, 37.0),
-      createData('Oreo', 437, 18.0, 63, 4.0),
-    ],
-    page: 0,
-    rowsPerPage: 5,
-  };
+class StudentTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      order: 'asc',
+      orderBy: 'calories',
+      selected: [],
+      data: [],
+      page: 0,
+      rowsPerPage: 5,
+    };
+
+    const dbRef = Firebase.firestore();
+    getData(dbRef, 'students', ['name', 'regnum','index','email','course','group'])
+      .then(d => {
+        this.setState({ data: d.map(d => createData(d.name, d.regnum,d.index,d.email,d.course,d.group)) });
+      });
+  } 
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -310,10 +311,23 @@ class CourseTable extends React.Component {
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {n.num}
+                        {n.name}
                       </TableCell>
-                      <TableCell align="left">{n.name}</TableCell>
-                      <TableCell align="left">{n.code}</TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.regnum}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.index}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.email}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.course}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.group}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -345,8 +359,8 @@ class CourseTable extends React.Component {
   }
 }
 
-CourseTable.propTypes = {
+StudentTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CourseTable);
+export default withStyles(styles)(StudentTable);

@@ -1,6 +1,7 @@
 import React from "react";
 import {MDBRow, MDBCol, MDBContainer} from 'mdbreact';
 import LecturerSearch from './LecturerSearch';
+import LecturerTable from './LecturerTable';
 
 
 const LecturerDetails = () => {
@@ -11,6 +12,8 @@ const LecturerDetails = () => {
         <br></br>
       </MDBRow>
         <LecturerSearch/>
+        <hr></hr>
+        <LecturerTable></LecturerTable>
     </MDBContainer>
   );
 }

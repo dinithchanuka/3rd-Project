@@ -12,6 +12,7 @@ const SubjectDetails = () => {
         <br></br>
       </MDBRow>
       <SubjectSearch/>
+      <hr></hr>
       <SubjectTable/>
     </MDBContainer>
   );
