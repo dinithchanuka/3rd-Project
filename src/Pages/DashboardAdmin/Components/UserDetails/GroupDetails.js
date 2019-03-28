@@ -1,6 +1,7 @@
 import React from "react";
 import {MDBRow, MDBCol, MDBContainer} from 'mdbreact';
 import GroupSearch from './GroupSearch';
+import GroupTable from './GroupTable'
 
 
 const GroupDetails = () => {
@@ -11,6 +12,8 @@ const GroupDetails = () => {
         <br></br>
       </MDBRow>
       <GroupSearch/> 
+      <hr></hr>
+      <GroupTable/>
     </MDBContainer>
   );
 }

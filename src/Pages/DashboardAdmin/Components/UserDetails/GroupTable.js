@@ -53,8 +53,8 @@ function getSorting(order, orderBy) {
 
 const rows = [
 
-  { id: 'name', numeric: false, disablePadding: true, label: 'Course Name' },
-  { id: 'code', numeric: false, disablePadding: true, label: 'Course Code' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Group Name' },
+  { id: 'code', numeric: false, disablePadding: true, label: 'Group Code' },
 
 ];
 
@@ -157,7 +157,7 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Courses
+            Groups
           </Typography>
         )}
       </div>
@@ -214,7 +214,7 @@ class CourseTable extends React.Component {
     };
 
     const dbRef = Firebase.firestore();
-    getData(dbRef, 'courses', ['code', 'name'])
+    getData(dbRef, 'groups', ['code', 'name'])
       .then(d => {
         this.setState({ data: d.map(d => createData(d.code, d.name)) });
       });
