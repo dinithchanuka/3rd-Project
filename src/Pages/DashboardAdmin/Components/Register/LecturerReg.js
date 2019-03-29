@@ -47,7 +47,7 @@ class Lecturer extends React.Component {
 
   handleChange(value) {
     const subjects = this.state.subjects;
-    subjects.push('${value}');
+    subjects.push(value);
     this.setState({ subjects });
   }
   

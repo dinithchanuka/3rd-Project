@@ -1,8 +1,8 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../Components/Firebase/Firebase';
+import Firebase from '../../../../Components/Firebase/Firebase';
 
-class SubjectEva extends React.Component {
+class CourseEva extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -121,4 +121,4 @@ class SubjectEva extends React.Component {
       );
     }; 
   }; 
-export default SubjectEva;
+export default CourseEva;

@@ -11,6 +11,9 @@ import LecturerDetails from './Components/UserDetails/LecturerDetails';
 import SubjectDetails from './Components/UserDetails/SubjectDetails';
 import GroupDetails from './Components/UserDetails/GroupDetails';
 import CourseDetails from './Components/UserDetails/CourseDetails';
+import SubjectEva from './Components/Evaluation/SubjectEva';
+import LecturerEva from './Components/Evaluation/LecturerEva';
+import CourseEva from './Components/Evaluation/CourseEva'
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -73,6 +76,10 @@ import shadows from '@material-ui/core/styles/shadows';
       const CourseDetails = this.state.CourseDetails;
       this.setState(state => ({Menu:11}));
     }
+    handleSubjectEva = () => {
+      const SubjectEva = this.state.SubjectEva;
+      this.setState(state => ({Menu:12}));
+    }
   
     onCollapse = (collapsed) => {
       console.log(collapsed);
@@ -82,6 +89,7 @@ import shadows from '@material-ui/core/styles/shadows';
     render() {
       let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
       let StudentDetailss,LecturerDetailss,SubjectDetailss,GroupDetailss,CourseDetailss;
+      let SubjectEvas;
       
       if(this.state.Menu===2){
         StudentRegs = (
@@ -153,6 +161,13 @@ import shadows from '@material-ui/core/styles/shadows';
           </div>
         )
       }
+      else if(this.state.Menu===12){
+        SubjectEvas = (
+          <div>
+            <SubjectEva></SubjectEva>
+          </div>
+        )
+      }
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -191,8 +206,8 @@ import shadows from '@material-ui/core/styles/shadows';
                 key="sub3"
                 title={<span><Icon type="team" /><span>Evaluation</span></span>}
               >
-                <Menu.Item key="8">Lecture</Menu.Item>
-                <Menu.Item key="9">Subject</Menu.Item>
+                <Menu.Item key="12">Lecturer</Menu.Item>
+                <Menu.Item key="13" onClick={this.handleSubjectEva}>Subject</Menu.Item>
                 <Menu.Item key="10">Course</Menu.Item>
               </SubMenu>
               <SubMenu
@@ -224,6 +239,7 @@ import shadows from '@material-ui/core/styles/shadows';
               {SubjectDetailss}
               {GroupDetailss}
               {CourseDetailss}
+              {SubjectEvas}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith
