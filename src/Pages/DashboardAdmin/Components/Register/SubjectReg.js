@@ -66,6 +66,7 @@ class Subject extends React.Component {
                   name="name"
                   onChange={this.updateInput}
                   value={this.state.name}
+                  required
                 />
               </MDBCol>
               <MDBCol md="3">
@@ -82,6 +83,7 @@ class Subject extends React.Component {
                   name="code"
                   onChange={this.updateInput}
                   value={this.state.code}
+                  required
                 />
               </MDBCol>
               
@@ -102,6 +104,7 @@ class Subject extends React.Component {
                   name="lechours"
                   onChange={this.updateInput}
                   value={this.state.lechours}
+                  required
                 />
               </MDBCol>
               <MDBCol md="2">

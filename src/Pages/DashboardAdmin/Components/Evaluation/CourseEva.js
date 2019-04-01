@@ -56,7 +56,7 @@ class CourseEva extends React.Component {
                   htmlFor="defaultFormCardNameEx"
                   className="grey-text font-weight-light"
                 >
-                  Subject Name
+                  Subject Code
                 </label>
                 <input
                   type="text"

@@ -1,38 +1,51 @@
-{/* <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
-  <div class="text-white text-center py-5 px-4 my-5">
-    <div>
-      <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>Create your beautiful website with MDBootstrap</strong></h2>
-      <p class="mx-5 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
-        optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos. Odit sed qui, dolorum!
-      </p>
-      <a class="btn btn-outline-white btn-md"><i class="fas fa-clone left"></i> View project</a>
-    </div>
-  </div>
-</div> */}
+import React, { Component } from "react";
+import { MDBJumbotron, MDBBtn, MDBContainer, MDBRow, MDBCol } from "mdbreact";
+import Login from './Login/Login'
 
-// header.js
-// import React from 'react';
-// import Heading from './heading';
-
-// const Header = React.createClass({
-//   render() {
-//     return (
-//       <header className="header">
-//         <Heading></Heading>
-//       </header>
-//     );
-//   }
-// });
-
-// export default Header;
-
-// heading.js
-import React from 'react';
-
-const Content = React.createClass({
-  render() {
-    return <h1 className="heading">Hello, world!</h1>;
+class Content extends Component{
+  state = {
+    login : false
   }
-});
+  handleClick = () => {
+    const Login = this.state.Login;
+    this.setState(state => ({login:true}));
+  }
+  render(){
+    let LoginView;
+
+    if(this.state.login=true){
+      LoginView = (
+        <div>
+          <Login/>
+        </div>
+      )
+    }
+    return (
+      <MDBContainer className="mt-5 text-center">
+        <MDBRow>
+          <MDBCol>
+            <MDBJumbotron>
+              <h2 className="h1 display-3">Hello, world!</h2>
+              <p className="lead">
+                This is a simple hero unit, a simple Jumotron-style component for
+                calling extra attention to featured content or information.
+              </p>
+              <hr className="my-2" />
+              <p>
+                It uses utility classes for typgraphy and spacing to space content out
+                within the larger container.
+              </p>
+              <p className="lead">
+                {LoginView}
+              </p>
+            </MDBJumbotron>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    )
+  }
+}
+
+
 
 export default Content;

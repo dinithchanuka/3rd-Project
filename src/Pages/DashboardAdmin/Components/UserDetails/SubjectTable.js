@@ -18,11 +18,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { getData } from '../../../../Components/ToTable/ToTable';
+import Firebase from '../../../../Components/Firebase/Firebase';
 
 let counter = 0;
-function createData(name, code, prachours, lechours, course, group) {
+function createData(code,name,course,group,lechours,prachours) {
   counter += 1;
-  return { id: counter, name, code, prachours, lechours, course, group };
+  return { id:code,name,course,group,lechours,prachours};
 }
 
 function desc(a, b, orderBy) {
@@ -50,12 +52,13 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'code', numeric: false, disablePadding: false, label: 'Code' },
-  { id: 'lechours', numeric: true, disablePadding: false, label: 'Lectutures (Hours)' },
-  { id: 'prachours', numeric: true, disablePadding: false, label: 'Practicle (Hours)' },
-  { id: 'course', numeric: true, disablePadding: false, label: 'Course' },
-  { id: 'group', numeric: true, disablePadding: false, label: 'Group' },
+
+  { id: 'code', numeric: false, disablePadding: true, label: 'Code' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'course', numeric: false, disablePadding: true, label: 'Course' },
+  { id: 'group', numeric: false, disablePadding: true, label: 'Group'},
+  { id: 'lechours', numeric: false, disablePadding: true, label: 'Lec Hours' },
+  { id: 'prachours', numeric: false, disablePadding: true, label: 'Prac Hours' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -157,7 +160,7 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Subjects
+            Lecturers
           </Typography>
         )}
       </div>
@@ -201,29 +204,24 @@ const styles = theme => ({
   },
 });
 
-class SubjectTable extends React.Component {
-  state = {
-    order: 'asc',
-    orderBy: 'calories',
-    selected: [],
-    data: [
-      createData('Cupcake', 305, 3.7, 67, 4.3,45),
-      createData('Donut', 452, 25.0, 51, 4.9),
-      createData('Eclair', 262, 16.0, 24, 6.0),
-      createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-      createData('Gingerbread', 356, 16.0, 49, 3.9),
-      createData('Honeycomb', 408, 3.2, 87, 6.5),
-      createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-      createData('Jelly Bean', 375, 0.0, 94, 0.0),
-      createData('KitKat', 518, 26.0, 65, 7.0),
-      createData('Lollipop', 392, 0.2, 98, 0.0),
-      createData('Marshmallow', 318, 0, 81, 2.0),
-      createData('Nougat', 360, 19.0, 9, 37.0),
-      createData('Oreo', 437, 18.0, 63, 4.0),
-    ],
-    page: 0,
-    rowsPerPage: 5,
-  };
+class CourseTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      order: 'asc',
+      orderBy: 'calories',
+      selected: [],
+      data: [],
+      page: 0,
+      rowsPerPage: 5,
+    };
+
+    const dbRef = Firebase.firestore();
+    getData(dbRef, 'subjects', ['code', 'name','course','group','lechours','prachours'])
+      .then(d => {
+        this.setState({ data: d.map(d => createData(d.code, d.name,d.course,d.group,d.lechours,d.prachours)) });
+      });
+  } 
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -312,13 +310,23 @@ class SubjectTable extends React.Component {
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
+                        {n.code}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
                         {n.name}
                       </TableCell>
-                      <TableCell align="right">{n.code}</TableCell>
-                      <TableCell align="right">{n.lechours}</TableCell>
-                      <TableCell align="right">{n.prachours}</TableCell>
-                      <TableCell align="right">{n.course}</TableCell>
-                      <TableCell align="right">{n.group}</TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.course}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.group}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.lechours}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        {n.prachours}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -350,8 +358,8 @@ class SubjectTable extends React.Component {
   }
 }
 
-SubjectTable.propTypes = {
+CourseTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SubjectTable);
+export default withStyles(styles)(CourseTable);
