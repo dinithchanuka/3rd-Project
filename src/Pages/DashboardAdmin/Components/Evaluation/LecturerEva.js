@@ -1,91 +1,121 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
+import Dropdown from '../../../../Components/Dropdown/Dropdown';
 
 class LecturerEva extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-     name:"",
      code:"",
-     lechours:"",
-     prachours:"",
-     course:"",
-     year:""
+     lecid:"",
+     by:"",
+     responsible:"",
     };
     this.updateInput = this.updateInput.bind(this)
-    this.addSubject = this.addSubject.bind(this)
+    this.addLecEva = this.addLecEva.bind(this)
   }
   updateInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  addSubject = e => {
+  addLecEva = e => {
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
     
-    const userRef = db.collection("subjects").add({
-      name: this.state.name,
+    const userRef = db.collection("evadetails").add({
+      name: this.state.lecid,
       code: this.state.code,
-      lechours: this.state.lechours,
-      prachours: this.state.prachours,
-      course: this.state.course,
-      year: this.state.year,
+      by: this.state.by,
+      responsible: this.state.responsible,
+      type: "Lecturer",
     }); 
     this.setState({
-      name:"",
+      lecid:"",
       code:"",
-      lechours:"",
-      prachours:"",
-      course:"",
-      year:"",
+      by:"",
+      responsible:"",
     });
+  }
+  viewEvaForm = () => {
+    var Ref = Firebase.firestore().collection('evaforms')
+    var query = Ref.where('code', '==',this.state.code).get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return;
+      }
+      snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+      });
+    })
+    .catch(err => {
+      console.log('Error getting documents', err);
+    });
+    this.setState({
+
+       });
   }
     render(){
       return (
         <MDBContainer>
-          <form onSubmit={this.addSubject}>
+          <form onSubmit={this.addLecEva} onSubmit ={this.viewEvaForm}> 
             <MDBRow>
-              <h4>Subject Evaluation</h4>
+              <h4>Lecturer Evaluation</h4>
             </MDBRow>
             <MDBRow>
-              <MDBCol md="4">
+              <MDBCol md="2">
                 <label
                   htmlFor="defaultFormCardNameEx"
                   className="grey-text font-weight-light"
                 >
-                  Subject Name
+                  Code
                 </label>
                 <input
                   type="text"
                   id="defaultFormCardNameEx"
                   className="form-control"
-                  name="name"
+                  name="code"
                   onChange={this.updateInput}
-                  value={this.state.name}
+                  value={this.state.code}
+                 
                 />
               </MDBCol>
-              <MDBCol md="4">
+              <MDBCol md="3">
               <label
                   htmlFor="defaultFormCardNameEx"
                   className="grey-text font-weight-light"
                 >
-                  Evaluated by
+                  Lecturer ID
               </label>
-              <select 
-                className="form-control"
-                name="year"
-                value={this.state.year}
-                onChange={this.updateInput}
+              <Dropdown 
+                  className="form-control" 
+                  name="lecid" 
+                  default="(Please select the student group)"
+                  onChange={this.updateInput}
+                  value={this.state.lecid}
+                  dbName="lecturers"
+                  fieldName="id">
+              </Dropdown>
+              </MDBCol>
+              <MDBCol md="3">
+              <label
+                  htmlFor="defaultFormCardNameEx"
+                  className="grey-text font-weight-light"
                 >
-                <option value=""></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+                  Evaluated By
+              </label>
+              <Dropdown 
+                  className="form-control" 
+                  name="by" 
+                  default="(Please select the student group)"
+                  onChange={this.updateInput}
+                  value={this.state.by}
+                  dbName="groups"
+                  fieldName="code">
+              </Dropdown>
               </MDBCol>
               <MDBCol md="4">
               <label
@@ -94,25 +124,21 @@ class LecturerEva extends React.Component {
                 >
                   Responsible
               </label>
-              <select 
-                className="form-control"
-                name="year"
-                value={this.state.year}
-                onChange={this.updateInput}
-                >
-                <option value=""></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              <Dropdown 
+                  className="form-control" 
+                  name="responsible" 
+                  default="(Please select the student group)"
+                  onChange={this.updateInput}
+                  value={this.state.responsible}
+                  dbName="lecturers"
+                  fieldName="id">
+              </Dropdown>
               </MDBCol>
-              
             </MDBRow>
             
           <div className="text-center py-4 mt-3">
               <MDBBtn className="btn btn-outline-purple" type="submit">
-                Submit
+                View Form
               <MDBIcon far icon="paper-plane" className="ml-2" />
               </MDBBtn>
             </div>

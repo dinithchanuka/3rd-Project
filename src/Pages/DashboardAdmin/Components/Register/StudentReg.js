@@ -1,7 +1,7 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
-import  Dropdown from '../../../../Components/Dropdown/Dropdown';
+import Dropdown from '../../../../Components/Dropdown/Dropdown';
 
 class Student extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Student extends React.Component {
      index:"",
      email:"",
      course:"",
-     group:""
+     group:"",
     };
     this.updateInput = this.updateInput.bind(this)
     this.addStudent = this.addStudent.bind(this)
@@ -34,36 +34,23 @@ class Student extends React.Component {
       email: this.state.email,
       course: this.state.course,
       group: this.state.group
-    }); 
+    })
+    const userRef1 = db.collection("users").add({
+      email: this.state.email,
+      type:"Student",
+      password:"UCSC@123"
+
+    });
     this.setState({
      name:"",
      regnum:"",
      index:"",
      email:"",
      course:"",
-     group:""
+     group:"",
     });
   }
 
-  getCourses(){
-    var courses = [];
-    const db = Firebase.firestore();
-    db.collection("courses")
-    .onSnapshot(function(courseList) {
-      courseList.forEach(function(doc) {
-          courses.push(doc.data().name);
-      });
-    });
-    return courses;
-  }
-
-  getCoursesList() {
-    const courses = this.getCourses();
-    console.log(courses);
-    return courses.map(course=>{
-      return (<option key={course} value={course}>{course}</option>);
-    })
-  }
   
   render(){
     return (
@@ -87,6 +74,7 @@ class Student extends React.Component {
                 name="name"
                 onChange={this.updateInput}
                 value={this.state.name}
+                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -103,6 +91,7 @@ class Student extends React.Component {
                 name="regnum"
                 onChange={this.updateInput}
                 value={this.state.regnum}
+                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -119,6 +108,7 @@ class Student extends React.Component {
                 name="index"
                 onChange={this.updateInput}
                 value={this.state.index}
+                required
               />
             </MDBCol>
           </MDBRow>
@@ -132,12 +122,13 @@ class Student extends React.Component {
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 id="defaultFormCardNameEx"
                 className="form-control"
                 name="email"
                 onChange={this.updateInput}
                 value={this.state.email}
+                required
               />
             </MDBCol>
             <MDBCol md="3">

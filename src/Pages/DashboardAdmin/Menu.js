@@ -80,6 +80,10 @@ import shadows from '@material-ui/core/styles/shadows';
       const SubjectEva = this.state.SubjectEva;
       this.setState(state => ({Menu:12}));
     }
+    handleLecturerEva = () => {
+      const LecturerEva = this.state.SubjectEva;
+      this.setState(state => ({Menu:13}));
+    }
   
     onCollapse = (collapsed) => {
       console.log(collapsed);
@@ -89,7 +93,7 @@ import shadows from '@material-ui/core/styles/shadows';
     render() {
       let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
       let StudentDetailss,LecturerDetailss,SubjectDetailss,GroupDetailss,CourseDetailss;
-      let SubjectEvas;
+      let SubjectEvas,LecturerEvas;
       
       if(this.state.Menu===2){
         StudentRegs = (
@@ -168,6 +172,13 @@ import shadows from '@material-ui/core/styles/shadows';
           </div>
         )
       }
+      else if(this.state.Menu===13){
+        LecturerEvas = (
+          <div>
+            <LecturerEva></LecturerEva>
+          </div>
+        )
+      }
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -206,9 +217,9 @@ import shadows from '@material-ui/core/styles/shadows';
                 key="sub3"
                 title={<span><Icon type="team" /><span>Evaluation</span></span>}
               >
-                <Menu.Item key="12">Lecturer</Menu.Item>
-                <Menu.Item key="13" onClick={this.handleSubjectEva}>Subject</Menu.Item>
-                <Menu.Item key="10">Course</Menu.Item>
+                <Menu.Item key="12" onClick={this.handleSubjectEva}>Subject</Menu.Item>
+                <Menu.Item key="13" onClick={this.handleLecturerEva}>Lecturer</Menu.Item>
+                <Menu.Item key="14" onClick={this.handleCourseEva}>Course</Menu.Item>
               </SubMenu>
               <SubMenu
                 key="sub4"
@@ -240,6 +251,7 @@ import shadows from '@material-ui/core/styles/shadows';
               {GroupDetailss}
               {CourseDetailss}
               {SubjectEvas}
+              {LecturerEvas}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith

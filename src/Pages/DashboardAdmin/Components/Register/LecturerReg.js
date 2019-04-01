@@ -1,8 +1,8 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
-import  Dropdown from '../../../../Components/Dropdown/DropdownMultiple';
-//import { Select } from 'antd';
+import Dropdown from '../../../../Components/Dropdown/DropdownMultiple';
+
 
 class Lecturer extends React.Component {
   constructor(props) {
@@ -35,7 +35,13 @@ class Lecturer extends React.Component {
       id: this.state.id,
       email: this.state.email,
       subjects: this.state.subjects
-    }); 
+    })
+    const userRef1 = db.collection("users").add({
+      email: this.state.email,
+      type:"Lecturer",
+      password:"UCSC@123"
+
+    });; 
     this.setState({
      name:"",
      shortform:"",
@@ -73,6 +79,7 @@ class Lecturer extends React.Component {
                 name="name"
                 onChange={this.updateInput}
                 value={this.state.name}
+                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -89,6 +96,7 @@ class Lecturer extends React.Component {
                 name="shortform"
                 onChange={this.updateInput}
                 value={this.state.shortform}
+                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -105,6 +113,7 @@ class Lecturer extends React.Component {
                 name="id"
                 onChange={this.updateInput}
                 value={this.state.id}
+                required
               />
             </MDBCol>
           </MDBRow>
@@ -118,12 +127,13 @@ class Lecturer extends React.Component {
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 id="defaultFormCardNameEx"
                 className="form-control"
                 name="email"
                 onChange={this.updateInput}
                 value={this.state.email}
+                required
               />
             </MDBCol>
             <MDBCol md="3">
