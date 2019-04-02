@@ -2,11 +2,7 @@ import React from 'react';
 import { NavLink } from "react-router-dom"; 
 import {MDBCol, MDBRow} from 'mdbreact';
 
-import StudentReg from './StudentReg';
-import LecturerReg from './LecturerReg';
-import SubjectReg from './SubjectReg';
-import CourseReg from './CourseReg' ;
-import StudentSearch from './StudentSearch';
+import Profile from './Profile/View';
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -18,21 +14,42 @@ import {
   const SubMenu = Menu.SubMenu;
   
   class SiderDemo extends React.Component {
+    
     state = {
       collapsed: false,
+      Menu:0
     };
+    
 
     handleClick = () => {
       const collapsed = this.state.collapsed;
       this.setState(state => ({ open: !collapsed}));
     };
   
+    handleProfile = () => {
+      const Profile = this.state.Profile;
+      this.setState(state => ({Menu:2}));
+    }
+
     onCollapse = (collapsed) => {
       console.log(collapsed);
       this.setState({ collapsed });
     }
+    
+    
   
     render() {
+
+      let Profiles;
+
+      if(this.state.Menu===2){
+        Profiles = (
+          <div>
+            <Profile></Profile>
+          </div>
+        )
+      }
+
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -47,7 +64,7 @@ import {
                 <span>Dashboard</span>
               </Menu.Item>
 
-              <Menu.Item key="2">
+              <Menu.Item key="2" onClick={handleProfile}>
                 <Icon type="pie-chart" />
                 <span>Profile</span>
               </Menu.Item>
@@ -76,7 +93,7 @@ import {
             <Content style={{ margin: '0 16px' }}>
               <MDBRow>
                 <MDBCol md = "9">
-                  
+                  {Profiles}
                 </MDBCol>
                 <MDBCol md = "3">
                   <p>Live Promo</p>
