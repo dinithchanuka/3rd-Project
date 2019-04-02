@@ -64,7 +64,7 @@ import {
                 <span>Dashboard</span>
               </Menu.Item>
 
-              <Menu.Item key="2" onClick={handleProfile}>
+              <Menu.Item key="2" onClick={this.handleProfile}>
                 <Icon type="pie-chart" />
                 <span>Profile</span>
               </Menu.Item>

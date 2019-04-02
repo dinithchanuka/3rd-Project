@@ -9,7 +9,7 @@ import LecturerDashboard from './Pages/DashboardLecturer/DashboardLecturer';
 import SuperDashboard from './Pages/DashboardSuper/DashboardSuper';
 import Error from './Pages/Error/PageNotFound';
 import Navbar from './Components/Navbar/Navbar';
-import view from './Pages/DashboardLecturer/Profile/View';
+//import view from './Pages/DashboardLecturer/Profile/View';
 import AdminMenu from './Pages/DashboardAdmin/Menu';
 
 
