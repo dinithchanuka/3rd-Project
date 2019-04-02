@@ -45,7 +45,7 @@ class Edit extends React.Component {
 
       name: this.state.name==""?this.props.name:this.state.name,
       shortform: this.state.shortform==""?this.props.shortform:this.state.shortform,
-      //id: this.state.id==""?this.props.id:this.state.id,
+      id: this.state.id==""?this.props.id:this.state.id,
       email: this.state.email==""?this.props.email:this.state.email,
       subjects: this.state.subjects==""?this.props.subjects:this.state.subjects
   })
