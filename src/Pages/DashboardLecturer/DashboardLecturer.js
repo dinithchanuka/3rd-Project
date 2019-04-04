@@ -15,4 +15,4 @@ class DashboardLecturer extends Component {
     }
   }
   
-  export default DashboardLecturer;
+  export default DashboardLecturer; 

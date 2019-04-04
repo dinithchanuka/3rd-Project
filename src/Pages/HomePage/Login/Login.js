@@ -85,7 +85,7 @@ class LoginForm extends React.Component {
           return '/superdashboard';
         }
       } else {
-        return '/shit';
+        return '/notfound';
       }
     }
 

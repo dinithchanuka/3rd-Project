@@ -225,9 +225,9 @@ import shadows from '@material-ui/core/styles/shadows';
                 key="sub4"
                 title={<span><Icon type="team" /><span>Feedback</span></span>}
               >
-                <Menu.Item key="11">Lecture</Menu.Item>
-                <Menu.Item key="12">Subject</Menu.Item>
-                <Menu.Item key="13">Course</Menu.Item>
+                <Menu.Item key="15">Lecture</Menu.Item>
+                <Menu.Item key="16">Subject</Menu.Item>
+                <Menu.Item key="17">Course</Menu.Item>
               </SubMenu>
               <Menu.Item key="14">
                 <Icon type="file" />

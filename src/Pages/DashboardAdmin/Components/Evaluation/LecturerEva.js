@@ -1,7 +1,8 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
-import Dropdown from '../../../../Components/Dropdown/Dropdown';
+import Dropdowns from '../../../../Components/Dropdown/Dropdown';
+import { Button } from 'antd';
 
 class LecturerEva extends React.Component {
   constructor(props) {
@@ -11,6 +12,9 @@ class LecturerEva extends React.Component {
      lecid:"",
      by:"",
      responsible:"",
+     year:"",
+     option1:"",
+     option2:""
     };
     this.updateInput = this.updateInput.bind(this)
     this.addLecEva = this.addLecEva.bind(this)
@@ -30,6 +34,7 @@ class LecturerEva extends React.Component {
       code: this.state.code,
       by: this.state.by,
       responsible: this.state.responsible,
+      year:this.state.year,
       type: "Lecturer",
     }); 
     this.setState({
@@ -37,19 +42,36 @@ class LecturerEva extends React.Component {
       code:"",
       by:"",
       responsible:"",
+      year:"",
     });
+    this.viewEvaForm();
   }
   viewEvaForm = () => {
+    const collapseID = "basicCollapse";
+    const details = [];
     var Ref = Firebase.firestore().collection('evaforms')
     var query = Ref.where('code', '==',this.state.code).get()
     .then(snapshot => {
       if (snapshot.empty) {
+        this.createForm();
         console.log('No matching documents.');
         return;
       }
-      snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
+      snapshot.forEach((doc) =>{
+        const {code,option1,option2} = doc.data();
+        details.push({
+          key:doc.id,
+          code,
+          option1,
+          option2
+        });
       });
+      this.setState(prevState => ({
+        collapseID: prevState.collapseID !== collapseID ,
+        code:details[0].code,
+        option1:details[0].option1,
+        option2:details[0].option2
+      }));
     })
     .catch(err => {
       console.log('Error getting documents', err);
@@ -58,10 +80,19 @@ class LecturerEva extends React.Component {
 
        });
   }
+  createForm = () => {
+    const collapseID1 = "basicCollapse1";
+    this.setState(prevState => ({
+      collapseID1: prevState.collapseID1 !== collapseID1 ,
+    }));
+  }
+  addEvaForm = () => {
+
+  }
     render(){
       return (
         <MDBContainer>
-          <form onSubmit={this.addLecEva} onSubmit ={this.viewEvaForm}> 
+          <form onSubmit={this.addLecEva}> 
             <MDBRow>
               <h4>Lecturer Evaluation</h4>
             </MDBRow>
@@ -83,22 +114,39 @@ class LecturerEva extends React.Component {
                  
                 />
               </MDBCol>
-              <MDBCol md="3">
+              <MDBCol md="2">
+                <label
+                  htmlFor="defaultFormCardNameEx"
+                  className="grey-text font-weight-light"
+                >
+                  Year
+                </label>
+                <input
+                  type="text"
+                  id="defaultFormCardNameEx"
+                  className="form-control"
+                  name="year"
+                  onChange={this.updateInput}
+                  value={this.state.year}
+                 
+                />
+              </MDBCol>
+              <MDBCol md="2">
               <label
                   htmlFor="defaultFormCardNameEx"
                   className="grey-text font-weight-light"
                 >
                   Lecturer ID
               </label>
-              <Dropdown 
+                <Dropdowns 
                   className="form-control" 
                   name="lecid" 
-                  default="(Please select the student group)"
+                  default="(Please select the course)"
                   onChange={this.updateInput}
-                  value={this.state.lecid}
+                  value={this.state.course}
                   dbName="lecturers"
                   fieldName="id">
-              </Dropdown>
+                </Dropdowns>
               </MDBCol>
               <MDBCol md="3">
               <label
@@ -107,7 +155,7 @@ class LecturerEva extends React.Component {
                 >
                   Evaluated By
               </label>
-              <Dropdown 
+              <Dropdowns
                   className="form-control" 
                   name="by" 
                   default="(Please select the student group)"
@@ -115,16 +163,16 @@ class LecturerEva extends React.Component {
                   value={this.state.by}
                   dbName="groups"
                   fieldName="code">
-              </Dropdown>
+              </Dropdowns>
               </MDBCol>
-              <MDBCol md="4">
+              <MDBCol md="3">
               <label
                   htmlFor="defaultFormCardNameEx"
                   className="grey-text font-weight-light"
                 >
                   Responsible
               </label>
-              <Dropdown 
+              <Dropdowns 
                   className="form-control" 
                   name="responsible" 
                   default="(Please select the student group)"
@@ -132,17 +180,174 @@ class LecturerEva extends React.Component {
                   value={this.state.responsible}
                   dbName="lecturers"
                   fieldName="id">
-              </Dropdown>
+              </Dropdowns>
               </MDBCol>
             </MDBRow>
             
-          <div className="text-center py-4 mt-3">
+            <div className="text-center py-4 mt-3">
               <MDBBtn className="btn btn-outline-purple" type="submit">
                 View Form
               <MDBIcon far icon="paper-plane" className="ml-2" />
               </MDBBtn>
             </div>
           </form>
+
+          <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
+            <form>
+              <MDBRow>
+                <MDBCol md = "4"><label>Topic</label></MDBCol>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md ="9">
+                  <input
+                    type="text"
+                    id="defaultFormCardNameEx"
+                    className="form-control"
+                    name="name"
+                    onChange={this.updateInput}
+                    value={this.state.topic1}
+                  />
+                </MDBCol>
+                <MDBCol md ="3">
+                  <Button type="primary" >Delete Topic</Button>
+                </MDBCol>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md = "5"><label>Criteria</label></MDBCol>
+                <MDBCol md = "2"><label>For Now</label></MDBCol>
+                <MDBCol md = "2"><label>Method</label></MDBCol>
+                <br></br>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md = "5">
+                  <input
+                  type="text"
+                  id="defaultFormCardNameEx"
+                  className="form-control"
+                  name="name"
+                  onChange={this.updateInput}
+                  value={this.state.option1}
+                  />
+                </MDBCol>
+                <MDBCol md = "2">
+                  <input
+                  type="text"
+                  id="defaultFormCardNameEx"
+                  className="form-control"
+                  name="name"
+                  onChange={this.updateInput}
+                  value={this.state.option2}
+                  />
+                </MDBCol>
+                <MDBCol md = "2">
+                  <select className="form-control">
+                    <option value="1-5">1 to 5</option>
+                    <option value="text">Text</option>
+                  </select>
+                </MDBCol>
+                <MDBCol md = "3">
+                  <Button type="primary">Delete Criteria</Button>
+                </MDBCol>
+              </MDBRow>
+              <br></br>
+              <MDBRow>
+                <MDBCol md = "6">
+
+                </MDBCol>
+                <MDBCol md = "3">
+                  <Button type="primary" >Add Criteria</Button>
+                </MDBCol>
+                <MDBCol md = "3">
+                  <Button type="primary" >Add Topic</Button>
+                </MDBCol>
+              </MDBRow>
+              <div className="text-center py-4 mt-3">
+                <MDBBtn className="btn btn-outline-purple" type="submit">
+                  Submit
+                <MDBIcon far icon="paper-plane" className="ml-2" />
+                </MDBBtn>
+              </div>
+            </form>
+          </MDBCollapse>
+
+          <MDBCollapse id="basicCollapse1" isOpen={this.state.collapseID1}>
+          <h5 color="red">Evaluation Form is not included...</h5>
+          <form>
+              <MDBRow>
+                <MDBCol md = "4"><label>Topic</label></MDBCol>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md ="9">
+                  <input
+                    type="text"
+                    id="defaultFormCardNameEx"
+                    className="form-control"
+                    name="name"
+                    onChange={this.updateInput}
+                    value={this.state.topic1}
+                  />
+                </MDBCol>
+                <MDBCol md ="3">
+                  <Button type="primary" >Delete Topic</Button>
+                </MDBCol>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md = "4"><label>Criteria</label></MDBCol>
+                <MDBCol md = "2"><label>For Now</label></MDBCol>
+                <MDBCol md = "2"><label>Method</label></MDBCol>
+                <br></br>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md = "3">
+                  <input
+                  type="text"
+                  id="defaultFormCardNameEx"
+                  className="form-control"
+                  name="name"
+                  onChange={this.updateInput}
+                  value={this.state.option1}
+                  />
+                </MDBCol>
+                <MDBCol md = "3">
+                  <input
+                  type="text"
+                  id="defaultFormCardNameEx"
+                  className="form-control"
+                  name="name"
+                  onChange={this.updateInput}
+                  value={this.state.option2}
+                  />
+                </MDBCol>
+                <MDBCol md = "3">
+                  <select className="form-control">
+                    <option value="1-5">1 to 5</option>
+                    <option value="text">Text</option>
+                  </select>
+                </MDBCol>
+                <MDBCol md = "3">
+                  <Button type="primary">Delete Criteria</Button>
+                </MDBCol>
+              </MDBRow>
+              <br></br>
+              <MDBRow>
+                <MDBCol md = "6">
+
+                </MDBCol>
+                <MDBCol md = "3">
+                  <Button type="primary" >Add Criteria</Button>
+                </MDBCol>
+                <MDBCol md = "3">
+                  <Button type="primary" >Add Topic</Button>
+                </MDBCol>
+              </MDBRow>
+              <div className="text-center py-4 mt-3">
+                <MDBBtn className="btn btn-outline-purple" type="submit">
+                  Submit
+                <MDBIcon far icon="paper-plane" className="ml-2" />
+                </MDBBtn>
+              </div>
+            </form>
+          </MDBCollapse>
         </MDBContainer>
       );
     }; 
