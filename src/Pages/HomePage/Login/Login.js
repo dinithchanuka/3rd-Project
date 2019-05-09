@@ -23,7 +23,12 @@ class LoginForm extends React.Component {
         };
         this.updateInput = this.updateInput.bind(this)
         this.handleLogin = this.handleLogin.bind(this)
+       // console.log(this.state.email);
       }
+    
+    // getEmail = () =>{
+    //   console.log(this.state.email);
+    // }
 
     updateInput = e => {
     this.setState({
@@ -40,6 +45,7 @@ class LoginForm extends React.Component {
     };
 
     handleLogin = () => {
+      //this.getEmail();
       const lec = [];
       var Ref = Firebase.firestore().collection('users')
       var query = Ref.where('email', '==',this.state.userEmail).get()
@@ -65,9 +71,9 @@ class LoginForm extends React.Component {
           type: lec[0].type
         });
 
-        console.log(this.state);
+        //console.log(this.state);
         const next =  this.handleLoggingType();
-        console.log(next);
+        //console.log(next);
         window.location.href = next;
       })
       .catch(err => {
@@ -88,6 +94,7 @@ class LoginForm extends React.Component {
         return '/shit';
       }
     }
+    
 
   render() {
     return (
@@ -115,7 +122,7 @@ class LoginForm extends React.Component {
               type="email"
               onChange={this.updateInput}
               value={this.state.userEmail}
-            />
+            /> 
 
             <TextField
               name = "userPassword"
@@ -131,6 +138,7 @@ class LoginForm extends React.Component {
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
+              
             </Button>
             <Button onClick={this.handleLogin} color="primary">
               Login
@@ -141,4 +149,4 @@ class LoginForm extends React.Component {
     );
   }
 }
-export default LoginForm;
+export default  LoginForm;

@@ -1,6 +1,6 @@
 import React from "react";
 import { MDBContainer , MDBCard, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import firebase from '../../../Components/Firebase/Firebase';
+import firebase from '../../../../Components/Firebase/Firebase';
 
 
 class Edit extends React.Component {
@@ -8,6 +8,7 @@ class Edit extends React.Component {
 
     super(props);
     this.state={
+      //open:false,
       docid:'',
       id:'',
       name:this.props.name,
@@ -18,6 +19,9 @@ class Edit extends React.Component {
     
   }
  
+//   handleClose = () => {
+//     this.setState({ open: false });
+// };
   
   onChange = (e) => {
     const state = this.state
@@ -174,6 +178,10 @@ class Edit extends React.Component {
             </MDBCol>
           </MDBRow>
           <div className="text-center py-4 mt-3">
+          {/* <MDBBtn onClick={this.handleClose} className="btn btn-outline-purple">
+              Cancel
+              
+            </MDBBtn> */}
             <MDBBtn className="btn btn-outline-purple" type="submit">
               Submit
             <MDBIcon far icon="paper-plane" className="ml-2" />

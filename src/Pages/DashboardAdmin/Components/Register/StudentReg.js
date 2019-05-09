@@ -32,6 +32,7 @@ class Student extends React.Component {
       regnum: this.state.regnum,
       index: this.state.index,
       email: this.state.email,
+      password: "UCSC@123",
       course: this.state.course,
       group: this.state.group
     })
