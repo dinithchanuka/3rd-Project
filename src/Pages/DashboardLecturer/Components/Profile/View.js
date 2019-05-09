@@ -1,14 +1,15 @@
 import React from 'react';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow, MDBContainer, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact';
 import EditForm from './Edit';
-import firebase from '../../../Components/Firebase/Firebase';
+import firebase from '../../../../Components/Firebase/Firebase';
 import Popover from 'react-simple-popover';
+// import { getEmail } from '../../HomePage/Login/Login';
 
 class View extends React.Component {
     constructor(props) {
         super(props);
 
-        this.ref = firebase.firestore().collection('lecturers').where("id", "==", "073");
+        this.ref = firebase.firestore().collection('lecturers').where("email", "==", "dinit@gmail.com");
         this.unsubscribe = null;
         this.state = {
             open: false,
@@ -19,6 +20,7 @@ class View extends React.Component {
     }
 
     onCollectionUpdate = (querySnapshot) => {
+        // getEmail();
         const lecturers = [];
         //const subjects = [];
         querySnapshot.forEach((doc) => {
@@ -69,7 +71,7 @@ class View extends React.Component {
                     <MDBCard>
 
                         <div class="text-left">
-                            <div className="h6" >
+                            
 
                                 <MDBRow>
                                     <MDBCol md="1"></MDBCol>
@@ -123,7 +125,7 @@ class View extends React.Component {
                                 </MDBRow>
 
                             </div>
-                        </div>
+                        
 
                         <MDBRow>
                             <MDBCol md="2"></MDBCol>
@@ -142,7 +144,7 @@ class View extends React.Component {
                                             target={this.refs.target}
                                             show={this.state.open}
                                             onHide={this.handleClose.bind(this)} >
-                                            <MDBCard style={{ width: "60rem" }}>
+                                            <MDBCard style={{ width: "40rem" }}>
                                             <EditForm
                                                     docid={lecturers.doc.id}
                                                     name={lecturers.name}

@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink } from "react-router-dom"; 
 import {MDBCol, MDBRow} from 'mdbreact';
 
-import Profile from './Profile/View';
+import Profile from './Components/Profile/View';
+import Setting from './Components/Settings/Settings';
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -31,6 +32,11 @@ import {
       this.setState(state => ({Menu:2}));
     }
 
+    handleSettings = () => {
+      const Settings = this.state.Settings;
+      this.setState(state => ({Menu:3}));
+    }
+
     onCollapse = (collapsed) => {
       console.log(collapsed);
       this.setState({ collapsed });
@@ -40,12 +46,19 @@ import {
   
     render() {
 
-      let Profiles;
+      let Profiles,Settings;
 
       if(this.state.Menu===2){
         Profiles = (
           <div>
             <Profile></Profile>
+          </div>
+        )
+      }
+      else if(this.state.Menu===3){
+        Settings = (
+          <div>
+            <Setting></Setting>
           </div>
         )
       }
@@ -69,7 +82,7 @@ import {
                 <span>Profile</span>
               </Menu.Item>
 
-              <Menu.Item key="5">
+              <Menu.Item key="3" onClick={this.handleSettings}>
                 <Icon type="pie-chart" />
                 <span>Settings</span>
               </Menu.Item>
@@ -94,6 +107,7 @@ import {
               <MDBRow>
                 <MDBCol md = "9">
                   {Profiles}
+                  {Settings}
                 </MDBCol>
                 <MDBCol md = "3">
                   <p>Live Promo</p>
