@@ -12,8 +12,6 @@ import Navbar from './Components/Navbar/Navbar';
 //import view from './Pages/DashboardLecturer/Profile/View';
 import AdminMenu from './Pages/DashboardAdmin/Menu';
 
-
-
 class App extends Component {
   render() {
     return (

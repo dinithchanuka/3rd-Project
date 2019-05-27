@@ -23,6 +23,7 @@ const GroupSearch = () => {
       </MDBRow>
     </MDBContainer>
   );
+  console.log(Search)
 }
 
 export default GroupSearch;
