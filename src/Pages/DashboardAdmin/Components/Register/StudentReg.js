@@ -178,7 +178,7 @@ class Student extends React.Component {
         </form>
         <hr></hr>
   
-        <StudentBulkRegistrationForm />
+        <StudentBulkRegistrationForm/>
       </MDBContainer>
     );
   }

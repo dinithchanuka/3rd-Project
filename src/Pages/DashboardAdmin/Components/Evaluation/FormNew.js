@@ -11,66 +11,100 @@ class FormExist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-         code:"",
-         lecid:"",
-         by:"",
-         responsible:"",
-         year:"",
-         option1:"",
-         option2:"",
-         shareholders: [{ name: "" }],
-         shareholders1: [{ name: "" }]
+         topics: [],
         };
     }
     
-    handleAddShareholder = () => {
-      this.setState({
-        shareholders: this.state.shareholders.concat([{ name: "" }])
-      });
+    addTopic = () => {
+      const topics = this.state.topics.slice();
+      const newTopics = topics.concat([{ 
+        num: `t-${topics.length}`,
+        name: "", 
+        criterias: [] 
+      }]);
+
+      this.setState({ topics: newTopics});
     };
-    handleRemoveShareholder = idx1 => () => {
+
+    removeTopic = idx => () => {
       this.setState({
-        shareholders: this.state.shareholders.filter((s1, sidx1) => idx1 !== sidx1)
+        topics: this.state.topics.filter((t, tidx) => idx !== tidx)
       });
     };
 
-    addEvaform = e => {
+    addCriteria = idx => () => {
+      const topics = this.state.topics.slice();
+      topics[idx].criterias = topics[idx].criterias.concat({
+        num: `c-${idx}-${topics[idx].criterias.length}`,
+        criteria: '', 
+        forNow:'', 
+        method: ''
+      });
+      this.setState({topics})
+    }
+
+    removeCriteria = topicIdx => critIdx => () => {
+      const topics = this.state.topics.slice();
+      const criterias = topics[topicIdx].criterias;
+      topics[topicIdx].criterias = criterias.filter((t, idx) => {
+        return idx !== critIdx;
+      })
+      this.setState({topics});
+    }
+
+    handleTopicNameChange = idx => (e) => {
+      const topics = this.state.topics.slice();
+      topics[idx].name = e.target.value;
+      this.setState({topics});
+    }
+
+    handleCriteriaChange = topicIdx => critIdx => fieldName => e => {
+      const topics = this.state.topics.slice();
+      topics[topicIdx].criterias[critIdx][fieldName] = e.target.value;
+      this.setState({topics});
+    }
+
+    handleSubmit = (e) => {
       e.preventDefault();
       const db = Firebase.firestore();
-      console.log(db);
-      
-      const userRef = db.collection("evaforms").add({
-        name: this.state.name,
-        regnum: this.state.regnum,
-        index: this.state.index,
-        email: this.state.email,
-        course: this.state.course,
-        group: this.state.group
-      })
-      
-      this.setState({
-       name:"",
-       regnum:"",
-       index:"",
-       email:"",
-       course:"",
-       group:"",
+
+      this.state.topics.forEach(topic => {
+        // topic.criterias.forEach(criteria => {
+          // let r = db.collection('evaforms')
+          // let p = r.doc(this.props.evacode)//.collection(this.props.evacode)
+          // let q = p.collection(topic.num)
+          //   // .add({name:topic.name})//.collection(topic.name)
+          // let s = q.doc(criteria.num).set(criteria)
+        const r = db.collection('evaforms')
+          .doc(this.props.evacode)
+          .collection('topics')
+          .doc(topic.num)
+          .set(topic);
+        console.log('SAVED', topic, "AS", r);
+        // })
       });
     }
 
     render(){
         return(
-          <form>
+          <form onSubmit={this.handleSubmit}>
           <h5 color="red">Evaluation Form is not included...</h5>
           <div>
-            {this.state.shareholders.map((shareholder, idx) => (
-              <div>
-                <Topic></Topic>
-              </div>
+            {this.state.topics.map((topic, idx) => (
+              <Topic 
+                key={'topic-'+idx} 
+                topic={topic}
+                topicNameOnChange={this.handleTopicNameChange(idx)}
+                onDelete={this.removeTopic(idx)}
+                toAddCriteria={this.addCriteria(idx)}
+                toDeleteCriteria={this.removeCriteria(idx)}
+                onCriteriaChange={this.handleCriteriaChange(idx)}
+                criterias={this.state.topics[idx].criterias}
+              ></Topic>
             ))}
             <MDBRow>
               <MDBCol md = "3">
-                <Button type="primary" onClick={this.handleAddShareholder} >Add New Topic</Button>
+                <Button type="primary" onClick={this.addTopic} >Add New Topic</Button>
               </MDBCol>
             </MDBRow>  
           </div>

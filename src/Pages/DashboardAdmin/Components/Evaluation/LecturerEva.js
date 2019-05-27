@@ -40,13 +40,17 @@ class LecturerEva extends React.Component {
       year:this.state.year,
       type: "Lecturer",
     }); 
-    this.setState({
-      lecid:"",
-      code:"",
-      by:"",
-      responsible:"",
-      year:"",
-    });
+
+    // const userRef1 = db.collection("evaforms").doc(this.state.code).set({
+    // });
+
+    // this.setState({
+    //   lecid:"",
+    //   code:"",
+    //   by:"",
+    //   responsible:"",
+    //   year:"",
+    // });
     this.viewEvaForm();
   }
   viewEvaForm = () => {
@@ -72,16 +76,12 @@ class LecturerEva extends React.Component {
       this.setState(prevState => ({
         collapseID: prevState.collapseID !== collapseID ,
         code:details[0].code,
-        option1:details[0].option1,
-        option2:details[0].option2
+      
       }));
     })
     .catch(err => {
       console.log('Error getting documents', err);
     });
-    this.setState({
-
-       });
   }
   createForm = () => {
     const collapseID1 = "basicCollapse1";
@@ -192,12 +192,12 @@ class LecturerEva extends React.Component {
           </div>
         </form>
 
-        <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
+         <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
           <FormExist></FormExist>
-        </MDBCollapse>
+         </MDBCollapse>
 
         <MDBCollapse id="basicCollapse1" isOpen={this.state.collapseID1}>
-          <FormNew></FormNew>
+          <FormNew evacode={this.state.code}></FormNew>
         </MDBCollapse>
 
       </MDBContainer>
