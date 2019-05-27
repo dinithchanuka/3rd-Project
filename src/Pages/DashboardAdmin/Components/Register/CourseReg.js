@@ -1,10 +1,11 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
+import {CourseBulkRegistrationForm} from "./CourseRegBulk";
 
 class Course extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
      name:"",
      code:"",
@@ -81,38 +82,90 @@ class Course extends React.Component {
           </div>
         </form>
         <hr></hr>
-  
-        <form>
-          <MDBRow>
-            <h4>Bulk Registration</h4>
-          </MDBRow>
-          <br></br>
-          <MDBRow>
-            <MDBCol md="5">
-              <h6>Dowload the tempalate and Upload here . . .</h6>
-            </MDBCol>
-            <MDBCol md ="5">
-            <input
-              type="file"
-              className="custom-file-input"
-              id="inputGroupFile01"
-              aria-describedby="inputGroupFileAddon01"
-            />
-            <label className="custom-file-label" htmlFor="inputGroupFile01">
-              Choose file
-            </label>
-            </MDBCol>
-          </MDBRow>
-        <div className="text-center py-4 mt-3">
-            <MDBBtn className="btn btn-outline-purple" type="submit">
-              Submit
-            <MDBIcon far icon="paper-plane" className="ml-2" />
-            </MDBBtn>
-          </div>
-        </form>
+        <CourseBulkRegistrationForm/>
       </MDBContainer>
     );
   }
 }
 
 export default Course;
+
+
+// import React from "react";
+
+// class Course extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       name: "",
+//       shareholders: [{ name: "" }]
+//     };
+//   }
+
+//   // ...
+
+//   handleShareholderNameChange = idx => evt => {
+//     const newShareholders = this.state.shareholders.map((shareholder, sidx) => {
+//       if (idx !== sidx) return shareholder;
+//       return { ...shareholder, name: evt.target.value };
+//     });
+
+//     this.setState({ shareholders: newShareholders });
+//   };
+
+//   handleSubmit = evt => {
+//     const { name, shareholders } = this.state;
+//     alert(`Incorporated: ${name} with ${shareholders.length} shareholders`);
+//   };
+
+//   handleAddShareholder = () => {
+//     this.setState({
+//       shareholders: this.state.shareholders.concat([{ name: "" }])
+//     });
+//   };
+
+//   handleRemoveShareholder = idx => () => {
+//     this.setState({
+//       shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx)
+//     });
+//   };
+
+//   render() {
+//     return (
+//       <form onSubmit={this.handleSubmit}>
+//         {/* ... */}
+//         <h4>Shareholders</h4>
+
+//         {this.state.shareholders.map((shareholder, idx) => (
+//           <div className="shareholder">
+//           <br></br>
+//             <input
+//               type="text"
+//               placeholder={`Shareholder #${idx + 1} name`}
+//               value={shareholder.name}
+//               onChange={this.handleShareholderNameChange(idx)}
+//             />
+//             <br></br>
+//             <button
+//               type="button"
+//               onClick={this.handleRemoveShareholder(idx)}
+//               className="small"
+//             >
+//               -
+//             </button>
+//           </div>
+//         ))}
+//         <br></br>
+//         <button
+//           type="button"
+//           onClick={this.handleAddShareholder}
+//           className="small"
+//         >
+//           Add Shareholder
+//         </button>
+//         <button>Incorporate</button>
+//       </form>
+//     );
+//   }
+// }
+//  export default Course;
