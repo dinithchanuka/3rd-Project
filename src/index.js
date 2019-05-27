@@ -4,6 +4,11 @@ import './index.css';
 
 import App from './App';
 
+//import 'jquery';
+// global.jQuery = require('jquery');
+// require('bootstrap');
+//import 'bootstrap/dist/css/bootstrap.css';
+////import './index.css';
 
 import * as serviceWorker from './serviceWorker';
 
