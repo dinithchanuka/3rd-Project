@@ -4,6 +4,7 @@ import {MDBCol, MDBRow} from 'mdbreact';
 
 import Profile from './Components/Profile/View';
 import Setting from './Components/Settings/Settings';
+import LivePromo from './LivePromo';
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -111,6 +112,9 @@ import {
                 </MDBCol>
                 <MDBCol md = "3">
                   <p>Live Promo</p>
+                  <div>
+                    <LivePromo/>
+                  </div>
                   <hr></hr>
                 </MDBCol>
               </MDBRow>
