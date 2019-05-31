@@ -19,7 +19,7 @@ class Criteria extends React.Component {
                   id="defaultFormCardNameEx"
                   className="form-control"
                   name="name"
-                  onChange={this.props.onFieldChange('name')}
+                  onChange={ this.props.onFieldChange('name')}
                   value={this.props.name}
                   />
                 </MDBCol>

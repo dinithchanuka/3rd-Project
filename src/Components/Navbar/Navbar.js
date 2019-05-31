@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Redirect } from 'react-router-dom'
+
 
 const styles = {
   root: {
@@ -21,23 +23,44 @@ const styles = {
   },
 };
 
-function ButtonAppBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            Evaluation System
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+class ButtonAppBar extends React.Component { 
+  constructor(props){
+    super(props)
+    const { classes } = props;
+    this.classes = classes;
+  }
+  state = {
+    redirect:false
+  }
+  setRedirect = () => {
+    console.log("set")
+    this.setState({
+      redirect:true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect){
+      return < Redirect to='./' />
+    }
+  }
+  render(){
+    return (
+      <div className={this.classes.root}>
+        {this.renderRedirect()}
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={this.classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={this.classes.grow}>
+              Evaluation System
+            </Typography>
+            <Button color="inherit" onClick={this.setRedirect}>Log Out</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 
 ButtonAppBar.propTypes = {
