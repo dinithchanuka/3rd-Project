@@ -80,7 +80,7 @@ class Lecturer extends React.Component {
                 name="name"
                 onChange={this.updateInput}
                 value={this.state.name}
-                required
+                
               />
             </MDBCol>
             <MDBCol md="3">
@@ -97,7 +97,7 @@ class Lecturer extends React.Component {
                 name="shortform"
                 onChange={this.updateInput}
                 value={this.state.shortform}
-                required
+             
               />
             </MDBCol>
             <MDBCol md="3">
@@ -114,7 +114,7 @@ class Lecturer extends React.Component {
                 name="id"
                 onChange={this.updateInput}
                 value={this.state.id}
-                required
+              
               />
             </MDBCol>
           </MDBRow>
@@ -134,7 +134,7 @@ class Lecturer extends React.Component {
                 name="email"
                 onChange={this.updateInput}
                 value={this.state.email}
-                required
+              
               />
             </MDBCol>
             <MDBCol md="3">

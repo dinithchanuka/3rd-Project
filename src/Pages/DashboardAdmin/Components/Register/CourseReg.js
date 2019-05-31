@@ -2,6 +2,7 @@ import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
 import {CourseBulkRegistrationForm} from "./CourseRegBulk";
+import { message, Button } from 'antd';
 
 class Course extends React.Component {
   constructor(props) {
@@ -16,8 +17,7 @@ class Course extends React.Component {
       [e.target.name]: e.target.value
     });
   }
-  addCourse = e => {
-    e.preventDefault();
+  addCourse = () => {
     const db = Firebase.firestore();
     console.log(db);
     
@@ -30,10 +30,46 @@ class Course extends React.Component {
       code:"",
     });
   }
+  dbOperation = (e) => {
+    e.preventDefault();
+    const db = Firebase.firestore();
+    const courseRef = db.collection('courses');
+
+    if(
+      this.state.name.length == 0 ||
+      this.state.code.length == 0
+    ){
+      message
+      .loading('Action in progress...',1)
+      .then(()=> message.info('There are some empty fields which are con not be Empty'))
+
+    }else(
+
+      courseRef.where('code','==',this.state.code).get()
+      .then((codeSnap) => {
+        if(codeSnap.docs.length == 0) {
+          this.addCourse();
+          message
+          .loading('Action in progress')
+          .then(()=> message.success('Course added Successfully'))
+        }else{
+          message
+          .loading('Action in progress...',1)
+          .then(()=> message.info('The code already exists'))
+
+          throw new Error ('code exists');
+        }
+      }
+      )
+      .catch((error)=> {
+        console.error(error);
+      })
+    )
+  } 
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addCourse}>
+        <form onSubmit={this.dbOperation}>
           <MDBRow>
             <h4>Course Register</h4>
           </MDBRow>
