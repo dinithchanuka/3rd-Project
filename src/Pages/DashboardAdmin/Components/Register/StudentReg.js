@@ -18,7 +18,6 @@ class Student extends React.Component {
      group:"",
      redirect:false,
      open:false,
-     dbKey:false,
     };
     this.updateInput = this.updateInput.bind(this)
     this.addStudent = this.addStudent.bind(this)
@@ -253,7 +252,6 @@ class Student extends React.Component {
           </div>
         </form>
         <hr></hr>
-  
         <StudentBulkRegistrationForm/>
       </MDBContainer>
     );
