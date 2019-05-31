@@ -3,6 +3,8 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBDropdown, MDBDropdown
 import Firebase from '../../../../Components/Firebase/Firebase';
 import Dropdown from '../../../../Components/Dropdown/Dropdown';
 import { StudentBulkRegistrationForm } from "./StudentRegBulk";
+import { Redirect } from 'react-router-dom'
+import { message, Button } from 'antd';
 
 class Student extends React.Component {
   constructor(props) {
@@ -14,6 +16,9 @@ class Student extends React.Component {
      email:"",
      course:"",
      group:"",
+     redirect:false,
+     open:false,
+     dbKey:false,
     };
     this.updateInput = this.updateInput.bind(this)
     this.addStudent = this.addStudent.bind(this)
@@ -23,8 +28,7 @@ class Student extends React.Component {
       [e.target.name]: e.target.value
     });
   }
-  addStudent = e => {
-    e.preventDefault();
+  addStudent = () => {
     const db = Firebase.firestore();
     console.log(db);
     
@@ -53,11 +57,84 @@ class Student extends React.Component {
     });
   }
 
-  
+  setRedirect = () => { 
+    this.setState({
+      redirect:true
+    })
+  }
+
+  renderRedirect = () => {
+     if (this.state.redirect){
+      return < Redirect to = './admindashboard' /> 
+       
+     }
+  };
+
+  success = (e) => {
+    e.preventDefault();
+    const db = Firebase.firestore();
+    const stuRef = db.collection('students');
+
+    if (
+        this.state.name.length == 0 || 
+        this.state.regnum.length == 0 ||
+        this.state.index.length == 0 ||
+        this.state.email.length == 0 ||
+        this.state.course.length == 0
+      ){
+      message
+      .loading('Action in progress...',1)
+      .then(() => message.info('There are some empty feilds which are cannot be Empty', 2.5));
+
+    } else (
+      
+      stuRef.where('regnum', '==', this.state.regnum).get()
+        .then((regNumSnap) => {
+          if (regNumSnap.docs.length == 0) {
+            return stuRef.where('index', '==', this.state.index).get();
+          }
+          message
+          .loading('Action in progress...',1)
+          .then(() => message.info('The register number already exists', 2.5));
+          
+          throw new Error('regnum exists');
+        })
+        .then((indexSnap) => {
+          if (indexSnap.docs.length == 0) {
+            return stuRef.where('email', '==', this.state.email).get();
+          }
+          message
+          .loading('Action in progress...',1)
+          .then(() => message.info('The Index number already exists', 2.5));
+
+          throw new Error('index exists');
+        })
+        .then((emailSnap) => {
+          if (emailSnap.docs.length == 0) {
+            this.addStudent();
+            message
+              .loading('Action in progress...',1)
+              .then(() => message.success('Succsesss', 2.5));
+          } else {
+            message
+              .loading('Action in progress...',1)
+              .then(() => message.info('The email address already exists', 2.5));
+            
+            throw new Error('email exists');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          
+        })
+    )
+
+  }
+
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addStudent}>
+        <form onSubmit={this.success}>
           <MDBRow>
             <h4>Student Register</h4>
           </MDBRow>
@@ -76,7 +153,6 @@ class Student extends React.Component {
                 name="name"
                 onChange={this.updateInput}
                 value={this.state.name}
-                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -93,7 +169,6 @@ class Student extends React.Component {
                 name="regnum"
                 onChange={this.updateInput}
                 value={this.state.regnum}
-                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -110,7 +185,6 @@ class Student extends React.Component {
                 name="index"
                 onChange={this.updateInput}
                 value={this.state.index}
-                required
               />
             </MDBCol>
           </MDBRow>
@@ -130,7 +204,6 @@ class Student extends React.Component {
                 name="email"
                 onChange={this.updateInput}
                 value={this.state.email}
-                required
               />
             </MDBCol>
             <MDBCol md="3">
@@ -170,7 +243,10 @@ class Student extends React.Component {
             </MDBCol>
           </MDBRow>
           <div className="text-center py-4 mt-3">
-            <MDBBtn className="btn btn-outline-purple" type="submit">
+            {/* {this.renderRedirect()} */}
+            <MDBBtn className="btn btn-outline-purple" type="submit" 
+              // onClick={this.setRedirect}
+              >
               Register
             <MDBIcon far icon="paper-plane" className="ml-2" />
             </MDBBtn>

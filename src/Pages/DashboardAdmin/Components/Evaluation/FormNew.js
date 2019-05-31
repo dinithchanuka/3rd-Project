@@ -69,19 +69,11 @@ class FormExist extends React.Component {
       const db = Firebase.firestore();
 
       this.state.topics.forEach(topic => {
-        // topic.criterias.forEach(criteria => {
-          // let r = db.collection('evaforms')
-          // let p = r.doc(this.props.evacode)//.collection(this.props.evacode)
-          // let q = p.collection(topic.num)
-          //   // .add({name:topic.name})//.collection(topic.name)
-          // let s = q.doc(criteria.num).set(criteria)
-        const r = db.collection('evaforms')
+        const r = db.collection('evaform')
           .doc(this.props.evacode)
           .collection('topics')
           .doc(topic.num)
           .set(topic);
-        console.log('SAVED', topic, "AS", r);
-        // })
       });
     }
 
