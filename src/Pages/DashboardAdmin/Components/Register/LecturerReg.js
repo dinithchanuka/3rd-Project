@@ -35,7 +35,9 @@ class Lecturer extends React.Component {
       shortform: this.state.shortform,
       id: this.state.id,
       email: this.state.email,
-      subjects: this.state.subjects
+      // subjects: this.state.subjects.forEach((sub)=>{
+      //   return sub;
+      // })
     })
     const userRef1 = db.collection("users").add({
       email: this.state.email,

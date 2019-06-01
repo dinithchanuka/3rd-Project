@@ -2,7 +2,8 @@ import React from "react";
 import { Input } from 'antd';
 import {MDBRow, MDBCol, MDBContainer,MDBBtn,MDBIcon,MDBCollapse} from 'mdbreact';
 
-import Firebase from '../../../../Components/Firebase/Firebase'
+import Firebase from '../../../../Components/Firebase/Firebase';
+import { message, Button } from 'antd';
 
 let Search = Input.Search;
 
@@ -11,8 +12,10 @@ class CourseSearch extends React.Component {
     super(props);
     this.state = {
       search:Input.Search,
-      code:"",
-      name:"",
+      details:[],
+      docid:'',
+      code:'',
+      name:'',
       
     }
   }
@@ -24,10 +27,16 @@ class CourseSearch extends React.Component {
     var query = Ref.where('code', '==',value).get()
     .then(snapshot => {
       if (snapshot.empty) {
+        message
+        .loading('Action in progress...',1)
+        .then(()=> message.info('No matching document...'))
+
         console.log('No matching documents.');
         return;
       }
-  
+      message
+      .loading('Action in progress...',1);
+
       snapshot.forEach((doc) =>{
         const {code,name} = doc.data();
         details.push({
@@ -39,6 +48,7 @@ class CourseSearch extends React.Component {
 
       this.setState(prevState => ({
         collapseID: prevState.collapseID !== collapseID ,
+        docid:details[0].key,
         code:details[0].code,
         name:details[0].name
       }));
@@ -48,6 +58,33 @@ class CourseSearch extends React.Component {
       console.log('Error getting documents', err);
     });
     
+  }
+  onChange = (e) => {
+    const state = this.state
+    state[e.target.name] = e.target.value;
+    console.log(e.target.value);
+    this.setState({courses:state})
+  }
+  updateDetails = (e) => {
+
+    e.preventDefault();
+    const db = Firebase.firestore();
+    
+    const courseRef = db.collection("courses").doc(this.state.docid);
+    courseRef.set({
+      name:this.state.name,
+      code:this.state.code
+    });
+
+    db.collection("courses").doc(this.state.docid).update({
+      name:this.state.name==""?this.state.name:this.state.name,
+      code:this.state.code==""?this.state.code:this.state.code
+    })
+    .then(function(){
+      message
+      .loading('Action in progress...',1)
+      .then(()=> message.info('Successfully updated...'),1)
+    });
   }
   render() {
     return (
@@ -66,7 +103,7 @@ class CourseSearch extends React.Component {
         </Search>
         </MDBCol>
         <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
-          <form>
+          <form onSubmit={this.updateDetails}>
             <MDBRow>
             <MDBCol md="4">
               <label
@@ -80,7 +117,7 @@ class CourseSearch extends React.Component {
                 id="defaultFormCardNameEx"
                 className="form-control"
                 name="name"
-                onChange={this.updateInput}
+                onChange={this.onChange}
                 value={this.state.name}
               />
             </MDBCol>
@@ -95,8 +132,8 @@ class CourseSearch extends React.Component {
                 type="text"
                 id="defaultFormCardNameEx"
                 className="form-control"
-                name="name"
-                onChange={this.updateInput}
+                name="code"
+                onChange={this.onChange}
                 value={this.state.code}
               />
             </MDBCol>
@@ -107,7 +144,7 @@ class CourseSearch extends React.Component {
               </MDBBtn>
             </MDBCol>
             <MDBCol>
-              <MDBBtn className="btn btn-outline-purple" type="submit">
+              <MDBBtn className="btn btn-outline-purple" type="">
                 Delete
               <MDBIcon far icon="paper-plane" className="ml-2" />
               </MDBBtn>
