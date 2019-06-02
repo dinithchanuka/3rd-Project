@@ -15,8 +15,7 @@ class CourseSearch extends React.Component {
       details:[],
       docid:'',
       code:'',
-      name:'',
-      
+      name:''
     }
   }
 
@@ -31,7 +30,6 @@ class CourseSearch extends React.Component {
         .loading('Action in progress...',1)
         .then(()=> message.info('No matching document...'))
 
-        console.log('No matching documents.');
         return;
       }
       message
@@ -57,14 +55,15 @@ class CourseSearch extends React.Component {
     .catch(err => {
       console.log('Error getting documents', err);
     });
-    
   }
+
   onChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
     console.log(e.target.value);
     this.setState({courses:state})
   }
+  
   updateDetails = (e) => {
 
     e.preventDefault();
@@ -83,8 +82,17 @@ class CourseSearch extends React.Component {
     .then(function(){
       message
       .loading('Action in progress...',1)
-      .then(()=> message.info('Successfully updated...'),1)
+      .then(()=> message.success('Successfully updated...'),1)
     });
+  }
+  deleteDetails = (e) => {
+    e.preventDefault();
+    const db = Firebase.firestore();
+    const courseRef = db.collection("courses").doc(this.state.docid).delete();
+
+    message
+    .loading('Action in progress...',0.75)
+    .then(()=> message.success('Successfully deleted...'),1.5)
   }
   render() {
     return (
@@ -144,7 +152,8 @@ class CourseSearch extends React.Component {
               </MDBBtn>
             </MDBCol>
             <MDBCol>
-              <MDBBtn className="btn btn-outline-purple" type="">
+              <MDBBtn className="btn btn-outline-purple" type=""
+                onClick={this.deleteDetails}>
                 Delete
               <MDBIcon far icon="paper-plane" className="ml-2" />
               </MDBBtn>
