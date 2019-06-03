@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom"; 
 
+import Dashboard from './Components/Dashboard/Dashboard'
 import StudentReg from './Components/Register/StudentReg';
 import LecturerReg from './Components/Register/LecturerReg';
 import SubjectReg from './Components/Register/SubjectReg';
@@ -36,6 +37,10 @@ import shadows from '@material-ui/core/styles/shadows';
       this.setState(state => ({ collapsed: !collapsed}));
     };
 
+    handleDashboard = () => {
+      const Dashboard = this.state.Dashboard;
+      this.setState(state => ({Menu:1}));
+    }
     handleStudentReg = () => {
       const StudentReg = this.state.StudentReg;
       this.setState(state => ({Menu:2}));
@@ -91,10 +96,18 @@ import shadows from '@material-ui/core/styles/shadows';
     }
   
     render() {
+      let Dashboards;
       let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
       let StudentDetailss,LecturerDetailss,SubjectDetailss,GroupDetailss,CourseDetailss;
       let SubjectEvas,LecturerEvas;
       
+      if(this.state.Menu===1){
+        Dashboards = (
+          <div>
+            <Dashboard></Dashboard>
+          </div>
+        )
+      }
       if(this.state.Menu===2){
         StudentRegs = (
           <div>
@@ -188,11 +201,11 @@ import shadows from '@material-ui/core/styles/shadows';
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1">
+              <Menu.Item key="1" onClick={this.handleDashboard}>
                 <Icon type="pie-chart" />
                 <span>Dashboard</span>
               </Menu.Item>
-             
+            
               <SubMenu
                 key="sub1"
                 title={<span><Icon type="user" /><span>Register</span></span>}
@@ -240,6 +253,7 @@ import shadows from '@material-ui/core/styles/shadows';
               Logged as a Admin
             </Header>
             <Content style={{ margin: '0 16px' }}>
+              {Dashboards}
               {StudentRegs}
               {LecturerRegs}
               {SubjectRegs}

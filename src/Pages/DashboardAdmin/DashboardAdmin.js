@@ -6,13 +6,13 @@ import 'mdbreact/dist/css/mdb.css';
 
 
 class DashboardAdmin extends Component {
-    render() {
-      return (
-        <div>
-          <MenuBar/>
-        </div>   
-      );
-    }
+  render() {
+    return (
+      <div>
+        <MenuBar/>
+      </div>   
+    );
   }
+}
   
   export default DashboardAdmin;
