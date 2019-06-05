@@ -39,28 +39,42 @@ class LecturerEva extends React.Component {
       responsible: this.state.responsible,
       year:this.state.year,
       type: "Lecturer",
-    }); 
+    });
 
-    // const userRef1 = db.collection("evaforms").doc(this.state.code).set({
-    // });
-
-    // this.setState({
-    //   lecid:"",
-    //   code:"",
-    //   by:"",
-    //   responsible:"",
-    //   year:"",
-    // });
-    this.viewEvaForm();
+    this.handleForms();
+  }
+  handleForms = () => {
+    const details = [];
+    // var evaformsRef = Firebase.firestore().collection('evaforms').doc('01').collection('topics')
+    // console.log('ghghjg'+evaformsRef)
+    // evaformsRef.get().then(collections => {
+    //   collections.forEach (collection => {
+    //     console.log('Found subcollection with id:', collection.data());
+    //   })
+    // })
+    var db = Firebase.firestore()
+    var ref = db.collection('evaforms').doc(this.state.code).collection('topics').doc('t-0')
+    var getDoc = ref.get()
+    .then(doc => {
+      if(!doc.exists){
+        console.log('new')
+        this.createNewForm();
+      }else{
+        console.log('old')
+        this.viewExistForm();
+      }
+      console.log(doc);
+    })
   }
   viewEvaForm = () => {
     const collapseID = "basicCollapse";
     const details = [];
-    var Ref = Firebase.firestore().collection('evaforms')
+    var Ref = Firebase.firestore().collection('evaform')
     var query = Ref.where('code', '==',this.state.code).get()
     .then(snapshot => {
       if (snapshot.empty) {
         this.createForm();
+        console.log(this.state.code);
         console.log('No matching documents.');
         return;
       }
@@ -83,10 +97,18 @@ class LecturerEva extends React.Component {
       console.log('Error getting documents', err);
     });
   }
-  createForm = () => {
+  createNewForm = () => {
     const collapseID1 = "basicCollapse1";
+    console.log("create new form")
     this.setState(prevState => ({
       collapseID1: prevState.collapseID1 !== collapseID1 ,
+    }));
+  }
+  viewExistForm = () => {
+    const collapseID = "basicCollapse";
+    console.log("view exist form")
+    this.setState(prevState => ({
+      collapseID: prevState.collapseID !== collapseID ,
     }));
   }
   render(){
@@ -192,9 +214,9 @@ class LecturerEva extends React.Component {
           </div>
         </form>
 
-         <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
-          <FormExist></FormExist>
-         </MDBCollapse>
+        <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
+          <FormExist evacode={this.state.code}></FormExist>
+        </MDBCollapse>
 
         <MDBCollapse id="basicCollapse1" isOpen={this.state.collapseID1}>
           <FormNew evacode={this.state.code}></FormNew>

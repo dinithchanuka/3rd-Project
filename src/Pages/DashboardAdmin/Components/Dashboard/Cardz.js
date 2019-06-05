@@ -8,7 +8,7 @@ const CardExample = () => {
         <MDBCardBody>
           <MDBCardTitle>Students</MDBCardTitle>
           <hr></hr>
-          <MDBCardImage className="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" waves />
+          <MDBCardImage className="img-fluid" src="https://img.icons8.com/material-two-tone/24/000000/classroom.png" waves />
           <MDBCardTitle>12536</MDBCardTitle>
         </MDBCardBody>
       </MDBCard>

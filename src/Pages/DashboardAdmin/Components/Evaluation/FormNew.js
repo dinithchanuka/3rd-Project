@@ -7,7 +7,6 @@ import { Button } from 'antd';
 import Topic from './Topic'
 
 class FormExist extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {

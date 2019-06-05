@@ -2,24 +2,53 @@ import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
 import Dropdowns from '../../../../Components/Dropdown/Dropdown';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 
 class FormExist extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.state = {
-         code:"",
-         lecid:"",
-         by:"",
-         responsible:"",
-         year:"",
-         option1:"",
-         option2:"",
-        };
+      super(props);
+      this.state = {
+        details:[],
+        code:"",
+        lecid:"",
+        by:"",
+        responsible:"",
+        year:""
+      };
     }
-        
-    
+
+    viewDetails = (value) => {
+      const details = [];
+      var formRef = Firebase.firestore().collection('evaforms').doc(this.props.code).get()
+        .then(snapshot => {
+          if(snapshot.empty){
+            console.log('No matching document')
+
+            return;
+          }
+
+          snapshot.forEach((doc) => {
+            const {code,name} = doc.data();
+            details.push({
+              key:doc.id,
+              code,
+              name
+            });
+          });
+
+          this.setState(prevState => ({
+            docid:details[0].key,
+            code:details[0].code,
+            name:details[0].name
+          }));
+          console.log("Test 2")
+        })
+        .catch(err => {
+          console.log('Error getting documents',err);
+        });
+    }
+     
     render(){
         return(
             <form>
