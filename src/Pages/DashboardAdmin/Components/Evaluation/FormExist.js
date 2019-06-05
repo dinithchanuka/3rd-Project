@@ -2,130 +2,131 @@ import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
 import Dropdowns from '../../../../Components/Dropdown/Dropdown';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
+
+import Topic from './Topic'
 
 class FormExist extends React.Component {
-
     constructor(props) {
-      super(props);
-      this.state = {
-        details:[],
-        code:"",
-        lecid:"",
-        by:"",
-        responsible:"",
-        year:""
-      };
+        super(props);
+        this.state = {
+         topics: [],
+        };
     }
 
-    viewDetails = (value) => {
+    componentDidMount() {
+      this.getDetails();
+    }
+    
+    getDetails = () => {
+      console.log("test 111")
       const details = [];
-      var formRef = Firebase.firestore().collection('evaforms').doc(this.props.code).get()
-        .then(snapshot => {
-          if(snapshot.empty){
-            console.log('No matching document')
-
-            return;
-          }
-
-          snapshot.forEach((doc) => {
-            const {code,name} = doc.data();
-            details.push({
-              key:doc.id,
-              code,
-              name
-            });
+      var evaformsRef = Firebase.firestore().collection('evaforms').doc('01').collection('topics')
+      evaformsRef.get().then(collections => {
+        console.log('col', collections);
+        const newTopics = [];
+        collections.forEach(collection => {
+          newTopics.push({
+            name: collection.data().name,
+            criterias: collection.data().criterias
           });
-
-          this.setState(prevState => ({
-            docid:details[0].key,
-            code:details[0].code,
-            name:details[0].name
-          }));
-          console.log("Test 2")
-        })
-        .catch(err => {
-          console.log('Error getting documents',err);
         });
+        console.log('new topics', newTopics);
+        this.setState({ topics: newTopics });
+      })
     }
-     
+    addTopic = () => {
+      const topics = this.state.topics.slice();
+      const newTopics = topics.concat([{ 
+        num: `t-${topics.length}`,
+        name: "", 
+        criterias: [] 
+      }]);
+
+      this.setState({ topics: newTopics});
+    };
+
+    removeTopic = idx => () => {
+      this.setState({
+        topics: this.state.topics.filter((t, tidx) => idx !== tidx)
+      });
+    };
+
+    addCriteria = idx => () => {
+      const topics = this.state.topics.slice();
+      topics[idx].criterias = topics[idx].criterias.concat({
+        num: `c-${idx}-${topics[idx].criterias.length}`,
+        criteria: '', 
+        forNow:'', 
+        method: ''
+      });
+      this.setState({topics})
+    }
+
+    removeCriteria = topicIdx => critIdx => () => {
+      const topics = this.state.topics.slice();
+      const criterias = topics[topicIdx].criterias;
+      topics[topicIdx].criterias = criterias.filter((t, idx) => {
+        return idx !== critIdx;
+      })
+      this.setState({topics});
+    }
+
+    handleTopicNameChange = idx => (e) => {
+      const topics = this.state.topics.slice();
+      topics[idx].name = e.target.value;
+      this.setState({topics});
+    }
+
+    handleCriteriaChange = topicIdx => critIdx => fieldName => e => {
+      const topics = this.state.topics.slice();
+      topics[topicIdx].criterias[critIdx][fieldName] = e.target.value;
+      this.setState({topics});
+    }
+
+    handleSubmit = (e) => {
+      e.preventDefault();
+      const db = Firebase.firestore();
+
+      this.state.topics.forEach(topic => {
+        const r = db.collection('evaform')
+          .doc(this.props.evacode)
+          .collection('topics')
+          .doc(topic.num)
+          .set(topic);
+      });
+    }
+
     render(){
         return(
-            <form>
-              <MDBRow>
-                <MDBCol md = "4"><label>Topic</label></MDBCol>
-              </MDBRow>
-              <MDBRow>
-                <MDBCol md ="9">
-                  <input
-                    type="text"
-                    id="defaultFormCardNameEx"
-                    className="form-control"
-                    name="name"
-                    onChange={this.updateInput}
-                    value={this.state.topic1}
-                  />
-                </MDBCol>
-                <MDBCol md ="3">
-                  <Button type="primary" >Delete Topic</Button>
-                </MDBCol>
-              </MDBRow>
-              <MDBRow>
-                <MDBCol md = "5"><label>Criteria</label></MDBCol>
-                <MDBCol md = "2"><label>For Now</label></MDBCol>
-                <MDBCol md = "2"><label>Method</label></MDBCol>
-                <br></br>
-              </MDBRow>
-              <MDBRow>
-                <MDBCol md = "5">
-                  <input
-                  type="text"
-                  id="defaultFormCardNameEx"
-                  className="form-control"
-                  name="name"
-                  onChange={this.updateInput}
-                  value={this.state.option1}
-                  />
-                </MDBCol>
-                <MDBCol md = "2">
-                  <input
-                  type="text"
-                  id="defaultFormCardNameEx"
-                  className="form-control"
-                  name="name"
-                  onChange={this.updateInput}
-                  value={this.state.option2}
-                  />
-                </MDBCol>
-                <MDBCol md = "2">
-                  <select className="form-control">
-                    <option value="1-5">1 to 5</option>
-                    <option value="text">Text</option>
-                  </select>
-                </MDBCol>
-                <MDBCol md = "3">
-                  <Button type="primary">Delete Criteria</Button>
-                </MDBCol>
-              </MDBRow>
-              <br></br>
-              <MDBRow>
-                <MDBCol md = "6">
-
-                </MDBCol>
-                <MDBCol md = "3">
-                  <Button type="primary" >Add Criteria</Button>
-                </MDBCol>
-                <MDBCol md = "3">
-                  <Button type="primary" >Add Topic</Button>
-                </MDBCol>
-              </MDBRow>
-              <div className="text-center py-4 mt-3">
-                <MDBBtn className="btn btn-outline-purple" type="submit">
-                  Submit
-                <MDBIcon far icon="paper-plane" className="ml-2" />
-                </MDBBtn>
-              </div>
-            </form>
+          <form onSubmit={this.handleSubmit}>
+          <h5 color="red">Form exists...</h5>
+          <div>
+            {this.state.topics.map((topic, idx) => (
+              <Topic 
+                key={'topic-'+idx} 
+                topic={topic}
+                topicNameOnChange={this.handleTopicNameChange(idx)}
+                onDelete={this.removeTopic(idx)}
+                toAddCriteria={this.addCriteria(idx)}
+                toDeleteCriteria={this.removeCriteria(idx)}
+                onCriteriaChange={this.handleCriteriaChange(idx)}
+                criterias={this.state.topics[idx].criterias}
+              ></Topic>
+            ))}
+            <MDBRow>
+              <MDBCol md = "3">
+                <Button type="primary" onClick={this.addTopic} >Add New Topic</Button>
+              </MDBCol>
+            </MDBRow>  
+          </div>
+          <div className="text-center py-4 mt-3">
+            <MDBBtn className="btn btn-outline-purple" type="submit">
+              Submit
+            <MDBIcon far icon="paper-plane" className="ml-2" />
+            </MDBBtn>
+          </div>
+        </form>
         )
     }
 };

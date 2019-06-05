@@ -4,7 +4,7 @@ import Firebase from '../../../../Components/Firebase/Firebase';
 import Dropdowns from '../../../../Components/Dropdown/Dropdown';
 import { Button } from 'antd';
 
-import FormExist from './FormExistx';
+import FormExist from './FormExist';
 import FormNew from './FormNew';
 
 class LecturerEva extends React.Component {
