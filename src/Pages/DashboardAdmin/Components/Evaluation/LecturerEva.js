@@ -4,7 +4,7 @@ import Firebase from '../../../../Components/Firebase/Firebase';
 import Dropdowns from '../../../../Components/Dropdown/Dropdown';
 import { Button } from 'antd';
 
-import FormExist from './FormExist';
+import FormExist from './FormExistx';
 import FormNew from './FormNew';
 
 class LecturerEva extends React.Component {
@@ -44,14 +44,6 @@ class LecturerEva extends React.Component {
     this.handleForms();
   }
   handleForms = () => {
-    const details = [];
-    // var evaformsRef = Firebase.firestore().collection('evaforms').doc('01').collection('topics')
-    // console.log('ghghjg'+evaformsRef)
-    // evaformsRef.get().then(collections => {
-    //   collections.forEach (collection => {
-    //     console.log('Found subcollection with id:', collection.data());
-    //   })
-    // })
     var db = Firebase.firestore()
     var ref = db.collection('evaforms').doc(this.state.code).collection('topics').doc('t-0')
     var getDoc = ref.get()
