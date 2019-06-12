@@ -31,7 +31,9 @@ import shadows from '@material-ui/core/styles/shadows';
       collapsed: false ,
       Menu:0 ,
     };
-
+    componentWillMount(){
+      this.handleDashboard();
+    }
     handleClick = () => {
       const collapsed = this.state.collapsed;
       this.setState(state => ({ collapsed: !collapsed}));

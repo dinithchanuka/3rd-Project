@@ -90,7 +90,6 @@ class LecturerEva extends React.Component {
     .catch(err => {
       console.log('Error getting documents', err);
     });
-    
   }
   createNewForm = () => {
     const collapseID1 = "basicCollapse1";

@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBCol, MDBRow } from 'mdbreact';
 import Statistis from './Statistic';
 import Cards from './Card';
-import RecipeReviewCard from './Cardz';
-
+import StudentCard from'./CardStu';
+import LecturerCard from'./CardLec';
+import SubCard from './CardSub';
+import CourseCard from './CardCourse';
+import GroupCard from './CardGroup'
 
 class Dashboard extends Component {
   
@@ -13,14 +16,25 @@ class Dashboard extends Component {
 
         <MDBRow>
           <MDBCol>
-            
           </MDBCol>
         </MDBRow> 
       
         <MDBRow>
           <MDBCol>
-            <RecipeReviewCard></RecipeReviewCard>
+            <StudentCard></StudentCard>
           </MDBCol>
+          <MDBCol>
+            <LecturerCard></LecturerCard>
+          </MDBCol>
+          <MDBCol>
+            <SubCard></SubCard>
+          </MDBCol>
+          <MDBCol>
+            <CourseCard></CourseCard>
+          </MDBCol>
+          {/* <MDBCol>
+            <GroupCard></GroupCard>
+          </MDBCol> */}
         </MDBRow> 
 
       </MDBRow>
