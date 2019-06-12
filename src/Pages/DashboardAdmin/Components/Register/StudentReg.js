@@ -46,6 +46,9 @@ class Student extends React.Component {
       password:"UCSC@123"
 
     });
+
+    this.signup(this.state.email,"UCSC@123");
+
     this.setState({
      name:"",
      regnum:"",
@@ -54,6 +57,16 @@ class Student extends React.Component {
      course:"",
      group:"",
     });
+  }
+
+  async signup(email,password){
+    console.log(email);
+    try {
+      await Firebase.auth().createUserWithEmailAndPassword(email, password);
+      console.log("Account created");
+    } catch (error) {
+      console.log(error.toString())
+    }
   }
 
   setRedirect = () => { 

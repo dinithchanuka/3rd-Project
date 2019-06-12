@@ -44,10 +44,21 @@ class LoginForm extends React.Component {
         this.setState({ open: false });
     };
 
+    // login() {
+    //   let email = this.state.email;
+    //   let password = this.state.Password;
+  
+    //   let { navigate } = this.props.navigation;
+  
+    //   Firebase.auth()
+    //     .signInWithEmailAndPassword(email, password);
+        
+    // }
+
     handleLogin = () => {
       //this.getEmail();
       const lec = [];
-      var Ref = Firebase.firestore().collection('users')
+      var Ref = Firebase.firestore().collection('users');
       var query = Ref.where('email', '==',this.state.userEmail).get()
       .then(snapshot => {
         if (snapshot.empty) {
@@ -72,7 +83,15 @@ class LoginForm extends React.Component {
         });
 
         //console.log(this.state);
-        const next =  this.handleLoggingType();
+        
+        // Firebase.auth()
+        //  .signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword).catch(function(error){
+        //    var errorCode=error.code;
+        //    console.log(error);
+        //  });
+         this.login(this.state.userEmail,this.state.userPassword);
+         const next =  this.handleLoggingType();
+        
         //console.log(next);
         window.location.href = next;
       })
@@ -81,6 +100,16 @@ class LoginForm extends React.Component {
       });
     }; 
     
+    async login(email,password){
+      console.log(email);
+      try {
+        await Firebase.auth().signInWithEmailAndPassword(email, password);
+        console.log("successfully login");
+      } catch (error) {
+        console.log(error.toString())
+      }
+    }
+
     handleLoggingType = () => {
       if(this.state.password==this.state.userPassword){
         if(this.state.type=="Lecturer"){
