@@ -14,7 +14,7 @@ const SearchPage = () => {
         </label>
         <br></br>
         <Search
-          placeholder="input search text"
+          placeholder=""
           enterButton="Search"
           size="large"
           onSearch={value => console.log(value)}>
@@ -27,7 +27,7 @@ const SearchPage = () => {
         </label>
         <br></br>
         <Search
-          placeholder="input search text"
+          placeholder=""
           enterButton="Search"
           size="large"
           onSearch={value => console.log(value)}>

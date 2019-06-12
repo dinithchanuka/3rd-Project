@@ -215,7 +215,7 @@ class Student extends React.Component {
             <Dropdown 
               className="form-control" 
               name="course" 
-              default="(Please select the course)"
+              default="Select a Course"
               onChange={this.updateInput}
               value={this.state.course}
               dbName="courses"
@@ -233,7 +233,7 @@ class Student extends React.Component {
             <Dropdown 
               className="form-control" 
               name="group" 
-              default="(Please select the student group)"
+              default="Select a Group"
               onChange={this.updateInput}
               value={this.state.group}
               dbName="groups"

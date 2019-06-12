@@ -104,7 +104,7 @@ class CourseSearch extends React.Component {
         </label>
         <br></br>
         <Search
-          placeholder="input search text"
+          placeholder=""
           enterButton="Search"
           size="large"
           onSearch={value => this.handleCourse(value)}>

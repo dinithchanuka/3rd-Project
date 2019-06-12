@@ -159,7 +159,7 @@ class CourseEva extends React.Component {
               <Dropdowns 
                 className="form-control" 
                 name="lecid" 
-                default="(Please select the course)"
+                default="Select a Course"
                 onChange={this.updateInput}
                 value={this.state.course}
                 dbName="lecturers"
@@ -176,7 +176,7 @@ class CourseEva extends React.Component {
             <Dropdowns
                 className="form-control" 
                 name="by" 
-                default="(Please select the student group)"
+                default="Select Student Group"
                 onChange={this.updateInput}
                 value={this.state.by}
                 dbName="groups"
@@ -193,7 +193,7 @@ class CourseEva extends React.Component {
             <Dropdowns 
                 className="form-control" 
                 name="responsible" 
-                default="(Please select the student group)"
+                default="Select a Lecturer"
                 onChange={this.updateInput}
                 value={this.state.responsible}
                 dbName="lecturers"

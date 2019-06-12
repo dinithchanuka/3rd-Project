@@ -106,7 +106,7 @@ class GroupSearch extends React.Component{
           </label>
           <br></br>
           <Search
-            placeholder="input search text"
+            placeholder=""
             enterButton="Search"
             size="large"
             onSearch={value => this.handleGroup(value)}>
