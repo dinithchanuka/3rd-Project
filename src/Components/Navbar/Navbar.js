@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Redirect } from 'react-router-dom'
-
+import Firebase from '../Firebase/Firebase';
 
 const styles = {
   root: {
@@ -34,8 +34,18 @@ class ButtonAppBar extends React.Component {
   }
   setRedirect = () => {
     console.log("set")
+    this.logout();
+   
     this.setState({
       redirect:true
+    })
+  }
+  logout = () =>{
+    
+    Firebase.auth().signOut().then(function(){
+      console.log("logout from current user");
+    }).catch(function(error){
+
     })
   }
   renderRedirect = () => {

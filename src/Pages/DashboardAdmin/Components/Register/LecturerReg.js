@@ -44,7 +44,10 @@ class Lecturer extends React.Component {
       type:"Lecturer",
       password:"UCSC@123"
 
-    });; 
+    });
+    
+    this.signup(this.state.email,"UCSC@123");
+    
     this.setState({
      name:"",
      shortform:"",
@@ -52,6 +55,19 @@ class Lecturer extends React.Component {
      email:"",
      subjects:[],
     });
+  }
+
+  async signup(email,password){
+    // var email=this.state.email
+    // var password="UCSC@123"
+    console.log(email);
+    try {
+      await Firebase.auth().createUserWithEmailAndPassword(email, password);
+     // this.addLecturer();
+      console.log("Account created");
+    } catch (error) {
+      console.log(error.toString())
+    }
   }
 
   handleChange(value) {
