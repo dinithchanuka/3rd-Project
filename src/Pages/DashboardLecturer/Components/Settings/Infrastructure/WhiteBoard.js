@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Switch from "react-switch";
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow, MDBContainer, MDBPopover, MDBPopoverBody, MDBPopoverHeader } from 'mdbreact'
 
-export class Notifications extends Component {
+export class WhiteBoard extends Component {
     constructor() {
         super();
-        this.state = { checked: true };
+        this.state = { checked: false };
         this.handleChange = this.handleChange.bind(this);
       }
     
@@ -13,15 +13,22 @@ export class Notifications extends Component {
         this.setState({ checked });
       }
   render() {
+    const checked=this.state.checked;
+    if(checked){
+        console.log("live promo active");
+    }
+    else{
+        console.log("live promo disable");
+    }
     return (
+        
       <div class="text-left">
         <MDBRow><p></p></MDBRow> 
         <MDBRow>
-          <MDBCol md="1"></MDBCol>
-          <MDBCol md="8">
+          
+          <MDBCol md="10">
             <label htmlFor="normal-switch">
-              <p><b>Notifications</b></p>
-              <p>**Keep showing notifications during the lecture time.</p>
+              <p><b>White board issues</b></p>
               
             </label>
           </MDBCol>
@@ -35,8 +42,11 @@ export class Notifications extends Component {
           </MDBCol>
         </MDBRow>
       </div>
+      
     )
+    
+    
   }
 }
 
-export default Notifications
+export default WhiteBoard
