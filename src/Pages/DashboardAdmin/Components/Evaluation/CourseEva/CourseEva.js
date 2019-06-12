@@ -1,23 +1,23 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../../../Components/Firebase/Firebase';
-import Dropdowns from '../../../../Components/Dropdown/Dropdown';
+import Firebase from '../../../../../Components/Firebase/Firebase';
+import Dropdowns from '../../../../../Components/Dropdown/Dropdown';
 import { Button } from 'antd';
 
 import FormExist from './FormExist';
 import FormNew from './FormNew';
 
-class LecturerEva extends React.Component {
+class CourseEva extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-     code:"",
+     code:null,
      lecid:"",
      by:"",
      responsible:"",
      year:"",
      option1:"",
-     option2:"",
+     option2:"",     
     };
     this.updateInput = this.updateInput.bind(this)
     this.addLecEva = this.addLecEva.bind(this)
@@ -27,7 +27,7 @@ class LecturerEva extends React.Component {
       [e.target.name]: e.target.value
     });
   }
-  addLecEva = e => {
+  addLecEva = e => {    
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
@@ -38,7 +38,7 @@ class LecturerEva extends React.Component {
       by: this.state.by,
       responsible: this.state.responsible,
       year:this.state.year,
-      type: "Lecturer",
+      type: "Course",
     });
 
     this.handleForms();
@@ -51,6 +51,7 @@ class LecturerEva extends React.Component {
       if(!doc.exists){
         console.log('new')
         this.createNewForm();
+        
       }else{
         console.log('old')
         this.viewExistForm();
@@ -59,6 +60,7 @@ class LecturerEva extends React.Component {
     })
   }
   viewEvaForm = () => {
+    
     const collapseID = "basicCollapse";
     const details = [];
     var Ref = Firebase.firestore().collection('evaform')
@@ -88,6 +90,7 @@ class LecturerEva extends React.Component {
     .catch(err => {
       console.log('Error getting documents', err);
     });
+    
   }
   createNewForm = () => {
     const collapseID1 = "basicCollapse1";
@@ -99,6 +102,7 @@ class LecturerEva extends React.Component {
   viewExistForm = () => {
     const collapseID = "basicCollapse";
     console.log("view exist form")
+
     this.setState(prevState => ({
       collapseID: prevState.collapseID !== collapseID ,
     }));
@@ -150,7 +154,7 @@ class LecturerEva extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Lecturer ID
+                Course Code
             </label>
               <Dropdowns 
                 className="form-control" 
@@ -200,12 +204,15 @@ class LecturerEva extends React.Component {
           
           <div className="text-center py-4 mt-3">
             <MDBBtn className="btn btn-outline-purple" type="submit">
-              View Form
+              Confirm
             <MDBIcon far icon="paper-plane" className="ml-2" />
             </MDBBtn>
+            <hr></hr>
           </div>
         </form>
 
+        
+         
         <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
           <FormExist evacode={this.state.code}></FormExist>
         </MDBCollapse>
@@ -213,10 +220,11 @@ class LecturerEva extends React.Component {
         <MDBCollapse id="basicCollapse1" isOpen={this.state.collapseID1}>
           <FormNew evacode={this.state.code}></FormNew>
         </MDBCollapse>
+                 
 
       </MDBContainer>
     );  
   };
 };
-export default LecturerEva;
+export default CourseEva;
 

@@ -13,8 +13,8 @@ import SubjectDetails from './Components/UserDetails/SubjectDetails';
 import GroupDetails from './Components/UserDetails/GroupDetails';
 import CourseDetails from './Components/UserDetails/CourseDetails';
 import SubjectEva from './Components/Evaluation/SubjectEva';
-import LecturerEva from './Components/Evaluation/LecturerEva';
-import CourseEva from './Components/Evaluation/CourseEva'
+import LecturerEva from './Components/Evaluation/LecEva/LecturerEva';
+import CourseEva from './Components/Evaluation/CourseEva/CourseEva'
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -86,8 +86,12 @@ import shadows from '@material-ui/core/styles/shadows';
       this.setState(state => ({Menu:12}));
     }
     handleLecturerEva = () => {
-      const LecturerEva = this.state.SubjectEva;
+      const LecturerEva = this.state.LecturerEva;
       this.setState(state => ({Menu:13}));
+    }
+    handleCourseEva = () => {
+      const CourseEva = this.state.CourseEva;
+      this.setState(state => ({Menu:14}));
     }
   
     onCollapse = (collapsed) => {
@@ -99,7 +103,7 @@ import shadows from '@material-ui/core/styles/shadows';
       let Dashboards;
       let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
       let StudentDetailss,LecturerDetailss,SubjectDetailss,GroupDetailss,CourseDetailss;
-      let SubjectEvas,LecturerEvas;
+      let SubjectEvas,LecturerEvas,CourseEvas;
       
       if(this.state.Menu===1){
         Dashboards = (
@@ -192,6 +196,13 @@ import shadows from '@material-ui/core/styles/shadows';
           </div>
         )
       }
+      else if(this.state.Menu===14){
+        CourseEvas = (
+          <div>
+            <CourseEva></CourseEva>
+          </div>
+        )
+      }
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -266,6 +277,7 @@ import shadows from '@material-ui/core/styles/shadows';
               {CourseDetailss}
               {SubjectEvas}
               {LecturerEvas}
+              {CourseEvas}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith

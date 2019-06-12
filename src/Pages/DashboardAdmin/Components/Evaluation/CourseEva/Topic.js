@@ -1,7 +1,5 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBCollapse, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact';
-import Firebase from '../../../../Components/Firebase/Firebase';
-import Dropdowns from '../../../../Components/Dropdown/Dropdown';
 import { Button } from 'antd';
 
 import Criteria from './Criteria';

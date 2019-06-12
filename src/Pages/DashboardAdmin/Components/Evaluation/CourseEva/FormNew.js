@@ -1,7 +1,6 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../../../Components/Firebase/Firebase';
-import Dropdowns from '../../../../Components/Dropdown/Dropdown';
+import Firebase from '../../../../../Components/Firebase/Firebase';
 import { Button } from 'antd';
 
 import Topic from './Topic'
@@ -13,28 +12,7 @@ class FormExist extends React.Component {
          topics: [],
         };
     }
-
-    componentDidMount() {
-      this.getDetails();
-    }
     
-    getDetails = () => {
-      console.log("test 111")
-      const details = [];
-      var evaformsRef = Firebase.firestore().collection('evaforms').doc('01').collection('topics')
-      evaformsRef.get().then(collections => {
-        console.log('col', collections);
-        const newTopics = [];
-        collections.forEach(collection => {
-          newTopics.push({
-            name: collection.data().name,
-            criterias: collection.data().criterias
-          });
-        });
-        console.log('new topics', newTopics);
-        this.setState({ topics: newTopics });
-      })
-    }
     addTopic = () => {
       const topics = this.state.topics.slice();
       const newTopics = topics.concat([{ 
@@ -89,7 +67,7 @@ class FormExist extends React.Component {
       const db = Firebase.firestore();
 
       this.state.topics.forEach(topic => {
-        const r = db.collection('evaform')
+        const r = db.collection('evaforms')
           .doc(this.props.evacode)
           .collection('topics')
           .doc(topic.num)
@@ -100,7 +78,7 @@ class FormExist extends React.Component {
     render(){
         return(
           <form onSubmit={this.handleSubmit}>
-          <h5 color="red">Form exists...</h5>
+          <h5 color="red">Evaluation Form is not included...</h5>
           <div>
             {this.state.topics.map((topic, idx) => (
               <Topic 

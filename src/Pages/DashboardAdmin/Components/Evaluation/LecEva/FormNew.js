@@ -1,7 +1,6 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../../../Components/Firebase/Firebase';
-import Dropdowns from '../../../../Components/Dropdown/Dropdown';
+import Firebase from '../../../../../Components/Firebase/Firebase';
 import { Button } from 'antd';
 
 import Topic from './Topic'
@@ -68,7 +67,7 @@ class FormExist extends React.Component {
       const db = Firebase.firestore();
 
       this.state.topics.forEach(topic => {
-        const r = db.collection('evaform')
+        const r = db.collection('evaforms')
           .doc(this.props.evacode)
           .collection('topics')
           .doc(topic.num)
