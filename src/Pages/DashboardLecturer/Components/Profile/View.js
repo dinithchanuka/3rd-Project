@@ -8,8 +8,9 @@ import Popover from 'react-simple-popover';
 class View extends React.Component {
     constructor(props) {
         super(props);
-
-        this.ref = firebase.firestore().collection('lecturers').where("email", "==", "dinit@gmail.com");
+        //console.log(firebase.auth().currentUser.email);
+        var user = firebase.auth().currentUser;
+        this.ref = firebase.firestore().collection('lecturers').where("email", "==", "kasun@gmail.com");
         this.unsubscribe = null;
         this.state = {
             open: false,
@@ -21,6 +22,7 @@ class View extends React.Component {
 
     onCollectionUpdate = (querySnapshot) => {
         // getEmail();
+        
         const lecturers = [];
         //const subjects = [];
         querySnapshot.forEach((doc) => {
@@ -57,7 +59,10 @@ class View extends React.Component {
     }
 
     handleClose(e) {
-        this.setState({ open: false });
+        this.setState({
+             open: false,
+             lecturers:[]
+             });
     }
 
     render() {

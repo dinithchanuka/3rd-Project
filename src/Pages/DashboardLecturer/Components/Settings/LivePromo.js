@@ -29,7 +29,7 @@ export class LivePromo extends Component {
           <MDBCol md="8">
             <label htmlFor="normal-switch">
               <p><b>Live Promo</b></p>
-              <p>If you don't need live promo in the lecture time you can disable it.</p>
+              <p>**Keep enabling the live chat during the lecture.</p>
             </label>
           </MDBCol>
           <MDBCol>
