@@ -14,13 +14,13 @@ class FormExist extends React.Component {
         };
     }
 
-    // componentDidMount() {
-    //   setTimeout(() => { this.getDetails()}, 5000);
+    componentDidMount() {
+      setTimeout(() => { this.getDetails()}, 50000);
       
-    // }
-    componentDidUpdate(){
-      this.getDetails()
     }
+    // componentDidUpdate(){
+    //   this.getDetails()
+    // }
     
     getDetails = () => {
       const details = [];

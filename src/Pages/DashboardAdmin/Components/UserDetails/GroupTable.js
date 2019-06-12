@@ -214,9 +214,9 @@ class CourseTable extends React.Component {
     };
 
     const dbRef = Firebase.firestore();
-    getData(dbRef, 'groups', ['code', 'name'])
+    getData(dbRef, 'groups', ['name', 'code'])
       .then(d => {
-        this.setState({ data: d.map(d => createData(d.code, d.name)) });
+        this.setState({ data: d.map(d => createData(d.name, d.code)) });
       });
   } 
 
