@@ -32,9 +32,9 @@ class Dashboard extends Component {
           <MDBCol>
             <CourseCard></CourseCard>
           </MDBCol>
-          {/* <MDBCol>
+          <MDBCol>
             <GroupCard></GroupCard>
-          </MDBCol> */}
+          </MDBCol>
         </MDBRow> 
 
       </MDBRow>

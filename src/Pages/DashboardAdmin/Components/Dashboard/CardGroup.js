@@ -37,7 +37,7 @@ class GroupCard extends Component {
           <MDBCardBody>
             <MDBCardTitle>Groups</MDBCardTitle>
             <hr></hr>
-            <MDBCardImage className="img-fluid" src="https://image.flaticon.com/icons/svg/67/67902.svg" waves />
+            <MDBCardImage className="img-fluid" src="https://image.flaticon.com/icons/svg/67/67836.svg" waves />
             <hr></hr>
             <MDBCardTitle>{this.state.size}</MDBCardTitle>
           </MDBCardBody>

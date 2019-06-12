@@ -4,6 +4,7 @@ import {MDBCol, MDBRow} from 'mdbreact';
 
 import Profile from './Components/Profile/View';
 import Setting from './Components/Settings/Settings';
+import Dashboard from './Components/Dashboard/Dashboard'
 import LivePromo from './LivePromo';
 
 import {
@@ -22,12 +23,20 @@ import {
       Menu:0
     };
     
+    componentWillMount(){
+      this.handleDashboard();
+    };
 
     handleClick = () => {
       const collapsed = this.state.collapsed;
       this.setState(state => ({ open: !collapsed}));
     };
   
+    handleDashboard = () => {
+      const Dashboard = this.state.Dashboard;
+      this.setState(state => ({Menu:1}));
+    }
+
     handleProfile = () => {
       const Profile = this.state.Profile;
       this.setState(state => ({Menu:2}));
@@ -47,8 +56,15 @@ import {
   
     render() {
 
-      let Profiles,Settings;
+      let Dashboards,Profiles,Settings;
 
+      if(this.state.Menu===1){
+        Dashboards = (
+          <div>
+            <Dashboard></Dashboard>
+          </div>
+        )
+      }
       if(this.state.Menu===2){
         Profiles = (
           <div>
@@ -73,7 +89,7 @@ import {
           >
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1">
+              <Menu.Item key="1" onClick={this.handleDashboard}>
                 <Icon type="pie-chart" />
                 <span>Dashboard</span>
               </Menu.Item>
@@ -107,6 +123,7 @@ import {
             <Content style={{ margin: '0 16px' }}>
               <MDBRow>
                 <MDBCol md = "9">
+                  {Dashboards}
                   {Profiles}
                   {Settings}
                 </MDBCol>
