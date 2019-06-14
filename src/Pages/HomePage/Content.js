@@ -25,15 +25,14 @@ class Content extends Component{
         <MDBRow>
           <MDBCol>
             <MDBJumbotron>
-              <h2 className="h1 display-3">Hello, world!</h2>
+              <h4 className="h1 display-3">UCSC</h4>
               <p className="lead">
-                This is a simple hero unit, a simple Jumotron-style component for
-                calling extra attention to featured content or information.
+                Be a Global Leader in Computing, Advancing the Frontiers of new knowledge through Learning and Research.
+                To advance and enhance computing knowledge, fostering global strategic alliances, promoting cross disciplinary research, producing socially responsible professionals with entrepreneurial skills, leadership qualities and integrity contributing  to  position the country as a knowledge hub in the region.
               </p>
               <hr className="my-2" />
               <p>
-                It uses utility classes for typgraphy and spacing to space content out
-                within the larger container.
+                A platform that can measure your insititute performance.
               </p>
               <p className="lead">
                 {LoginView}

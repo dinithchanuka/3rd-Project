@@ -160,7 +160,7 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Lecturers
+            Subjects
           </Typography>
         )}
       </div>

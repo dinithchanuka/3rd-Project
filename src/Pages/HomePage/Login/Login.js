@@ -136,7 +136,7 @@ class LoginForm extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Sign Up Here . . .</DialogTitle>
+          <DialogTitle id="form-dialog-title">Log In Here . . .</DialogTitle>
           <DialogContent>
             <DialogContentText>
               

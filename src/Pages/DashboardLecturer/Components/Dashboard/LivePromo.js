@@ -33,8 +33,7 @@ class SubjectCard extends Component {
           <MDBCardBody>
             <h5>Dinith        10:27</h5>
             <MDBCardText>
-            Some quick example text to build on the card title and make
-            up the bulk of the cards content.
+            Sir, could you elaborate the topics in the 5th slide?
           </MDBCardText>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

@@ -255,10 +255,10 @@ import shadows from '@material-ui/core/styles/shadows';
                 <Menu.Item key="16">Subject</Menu.Item>
                 <Menu.Item key="17">Course</Menu.Item>
               </SubMenu>
-              <Menu.Item key="14">
+              {/* <Menu.Item key="14">
                 <Icon type="file" />
                 <span>File</span>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </Sider>
           <Layout>

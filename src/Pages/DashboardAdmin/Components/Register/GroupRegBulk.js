@@ -65,7 +65,7 @@ export class GroupBulkRegistrationForm extends React.Component {
                         id="defaultFormCardNameEx"
                         className="form-control"
                         name="headers"
-                        value={"Course Name, Course Code"}
+                        value={"Group Name, Group Code"}
                         readOnly
                     />
                 </MDBCol>

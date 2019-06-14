@@ -35,9 +35,9 @@ class StudentCard extends Component {
       <MDBCol>
         <MDBCard style={{ width: "12rem" }}>
           <MDBCardBody>
-            <MDBCardTitle>Lecturers</MDBCardTitle>
+            <MDBCardTitle>Students</MDBCardTitle>
             <hr></hr>
-            <MDBCardImage className="img-fluid" src="https://image.flaticon.com/icons/svg/67/67914.svg" waves />
+            <MDBCardImage className="img-fluid" src="https://image.flaticon.com/icons/svg/67/67902.svg" waves />
             <hr></hr>
             <MDBCardTitle>{this.state.size}</MDBCardTitle>
           </MDBCardBody>
