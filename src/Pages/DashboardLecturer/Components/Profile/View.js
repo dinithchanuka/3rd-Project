@@ -10,7 +10,7 @@ class View extends React.Component {
         super(props);
         //console.log(firebase.auth().currentUser.email);
         var user = firebase.auth().currentUser;
-        this.ref = firebase.firestore().collection('lecturers').where("email", "==", "kasun@gmail.com");
+        this.ref = firebase.firestore().collection('lecturers').where("email", "==", localStorage.getItem('userEmail'));
         this.unsubscribe = null;
         this.state = {
             open: false,
@@ -66,6 +66,7 @@ class View extends React.Component {
     }
 
     render() {
+        console.log(localStorage.getItem('userEmail'))
 
         return (
 

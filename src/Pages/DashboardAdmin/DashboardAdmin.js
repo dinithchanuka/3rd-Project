@@ -6,7 +6,9 @@ import 'mdbreact/dist/css/mdb.css';
 
 
 class DashboardAdmin extends Component {
+  
   render() {
+    console.log(localStorage.getItem('userEmail'));
     return (
       <div>
         <MenuBar/>

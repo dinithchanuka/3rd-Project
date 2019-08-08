@@ -89,6 +89,7 @@ class LoginForm extends React.Component {
         //    var errorCode=error.code;
         //    console.log(error);
         //  });
+        localStorage.setItem('userEmail', this.state.userEmail);
          this.login(this.state.userEmail,this.state.userPassword);
          const next =  this.handleLoggingType();
         
@@ -166,8 +167,7 @@ class LoginForm extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
-              
+              Cancel 
             </Button>
             <Button onClick={this.handleLogin} color="primary">
               Login

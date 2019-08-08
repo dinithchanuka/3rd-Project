@@ -15,11 +15,9 @@ class Dashboard extends Component {
         </MDBRow> 
       
         <MDBRow>
-          
           <MDBCol>
             <SubCard></SubCard>
           </MDBCol>
-          
         </MDBRow> 
 
       </MDBRow>
