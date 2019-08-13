@@ -32,7 +32,7 @@ class LecturerEva extends React.Component {
     const db = Firebase.firestore();
     console.log(db);
     
-    const userRef = db.collection("evadetails").add({
+    const userRef = db.collection("lecevadetails").add({
       name: this.state.lecid,
       code: this.state.code,
       by: this.state.by,
@@ -44,26 +44,27 @@ class LecturerEva extends React.Component {
     this.handleForms();
   }
   handleForms = () => {
-    var db = Firebase.firestore()
-    var ref = db.collection('evaforms').doc(this.state.code).collection('topics').doc('t-0')
-    var getDoc = ref.get()
-    .then(doc => {
-      if(!doc.exists){
-        console.log('new')
-        this.createNewForm();
+    if (this.state.code) {
+      var db = Firebase.firestore()
+      var ref = db.collection('lecevaforms').doc(this.state.code).collection('topics').doc('t-0')
+      var getDoc = ref.get()
+        .then(doc => {
+          if(!doc.exists){
+            console.log('new')
+            this.createNewForm();
         
-      }else{
-        console.log('old')
-        this.viewExistForm();
-      }
-      console.log(doc);
-    })
+          }else{
+            console.log('old')
+            this.viewExistForm();
+          }
+          console.log(doc);
+        })}
   }
   viewEvaForm = () => {
     
     const collapseID = "basicCollapse";
     const details = [];
-    var Ref = Firebase.firestore().collection('evaform')
+    var Ref = Firebase.firestore().collection('lecevaforms')
     var query = Ref.where('code', '==',this.state.code).get()
     .then(snapshot => {
       if (snapshot.empty) {

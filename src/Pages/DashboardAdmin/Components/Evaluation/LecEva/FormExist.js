@@ -24,10 +24,10 @@ class FormExist extends React.Component {
     
     getDetails = () => {
       const details = [];
-      var code = this.evacode.value
+      var code = this.props.evacode
       
-      if(code != ""){
-        var evaformsRef = Firebase.firestore().collection('evaforms').doc(code).collection('topics')
+      if(code){
+        var evaformsRef = Firebase.firestore().collection('lecevaforms').doc(code).collection('topics')
         evaformsRef.get().then(collections => {
           console.log('oooooo')
           console.log(this.props.evacode)
@@ -99,7 +99,7 @@ class FormExist extends React.Component {
       const db = Firebase.firestore();
 
       this.state.topics.forEach(topic => {
-        const r = db.collection('evaforms')
+        const r = db.collection('lecevaforms')
           .doc(this.props.evacode)
           .collection('topics')
           .doc(topic.num)

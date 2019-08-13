@@ -12,9 +12,9 @@ import LecturerDetails from './Components/UserDetails/LecturerDetails';
 import SubjectDetails from './Components/UserDetails/SubjectDetails';
 import GroupDetails from './Components/UserDetails/GroupDetails';
 import CourseDetails from './Components/UserDetails/CourseDetails';
-import SubjectEva from './Components/Evaluation/SubjectEva';
+import SubjectEva from './Components/Evaluation/SubjectEva/SubjectEva';
 import LecturerEva from './Components/Evaluation/LecEva/LecturerEva';
-import CourseEva from './Components/Evaluation/CourseEva/CourseEva'
+import CourseEva from './Components/Evaluation/CourseEva/CourseEva';
 
 import {
     Layout, Menu, Breadcrumb, Icon,

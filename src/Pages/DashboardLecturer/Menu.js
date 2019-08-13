@@ -4,7 +4,8 @@ import {MDBCol, MDBRow} from 'mdbreact';
 
 import Profile from './Components/Profile/View';
 import Setting from './Components/Settings/Settings';
-import Dashboard from './Components/Dashboard/Dashboard'
+import Dashboard from './Components/Dashboard/Dashboard';
+import Forms from './Components/Forms/Forms'
 import LivePromo from './LivePromo';
 
 import {
@@ -47,6 +48,11 @@ import {
       this.setState(state => ({Menu:3}));
     }
 
+    handleForms = () => {
+      const Settings = this.state.Forms;
+      this.setState(state => ({Menu:4}));
+    }
+
     onCollapse = (collapsed) => {
       console.log(collapsed);
       this.setState({ collapsed });
@@ -79,6 +85,13 @@ import {
           </div>
         )
       }
+      else if(this.state.Menu===4){
+        Settings = (
+          <div>
+            <Forms></Forms>
+          </div>
+        )
+      }
 
       return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -104,6 +117,11 @@ import {
                 <span>Settings</span>
               </Menu.Item>
 
+              <Menu.Item key="4" onClick={this.handleForms}>
+                <Icon type="pie-chart" />
+                <span>Forms</span>
+              </Menu.Item>
+
               <Menu.Item key="6">
                 <Icon type="pie-chart" />
                 <span>Evalution Form</span>
@@ -126,6 +144,7 @@ import {
                   {Dashboards}
                   {Profiles}
                   {Settings}
+                  {Forms}
                 </MDBCol>
                 <MDBCol md = "3">
                   <p>Live Promo</p>

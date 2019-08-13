@@ -67,7 +67,7 @@ class FormExist extends React.Component {
       const db = Firebase.firestore();
 
       this.state.topics.forEach(topic => {
-        const r = db.collection('evaforms')
+        const r = db.collection('subevaforms')
           .doc(this.props.evacode)
           .collection('topics')
           .doc(topic.num)

@@ -1,11 +1,9 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../../../../Components/Firebase/Firebase';
-import Dropdowns from '../../../../../Components/Dropdown/Dropdown';
-import { Button } from 'antd';
+import Firebase from '../../../../Components/Firebase/Firebase';
+import Dropdowns from '../../../../Components/Dropdown/Dropdown';
 
 import FormExist from './FormExist';
-import FormNew from './FormNew';
 
 class CourseEva extends React.Component {
   constructor(props) {
@@ -112,49 +110,49 @@ class CourseEva extends React.Component {
       <MDBContainer>
         <form onSubmit={this.addLecEva}> 
           <MDBRow>
-            <h4>Lecturer Evaluation</h4>
+            <h4>Responsible Evaluation Forms</h4>
           </MDBRow>
           <MDBRow>
-            <MDBCol md="2">
+            <MDBCol md="4">
               <label
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Code
+                Subject
               </label>
-              <input
-                type="text"
-                id="defaultFormCardNameEx"
-                className="form-control"
-                name="code"
+              <Dropdowns 
+                className="form-control" 
+                name="lecid" 
+                default="(Please select the course)"
                 onChange={this.updateInput}
-                value={this.state.code}
-               
-              />
+                value={this.state.course}
+                dbName="lecturers"
+                fieldName="id">
+              </Dropdowns>
             </MDBCol>
-            <MDBCol md="2">
+            <MDBCol md="4">
               <label
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Year
+                Lecturer
               </label>
-              <input
-                type="text"
-                id="defaultFormCardNameEx"
-                className="form-control"
-                name="year"
+              <Dropdowns 
+                className="form-control" 
+                name="lecid" 
+                default="(Please select the course)"
                 onChange={this.updateInput}
-                value={this.state.year}
-               
-              />
+                value={this.state.course}
+                dbName="lecturers"
+                fieldName="id">
+              </Dropdowns>
             </MDBCol>
-            <MDBCol md="2">
+            <MDBCol md="4">
             <label
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Course Code
+                Course
             </label>
               <Dropdowns 
                 className="form-control" 
@@ -166,61 +164,32 @@ class CourseEva extends React.Component {
                 fieldName="id">
               </Dropdowns>
             </MDBCol>
-            <MDBCol md="3">
-            <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Evaluated By
-            </label>
-            <Dropdowns
-                className="form-control" 
-                name="by" 
-                default="(Please select the student group)"
+            
+          </MDBRow>
+          <MDBRow>
+          <input
+                type="text"
+                id="defaultFormCardNameEx"
+                className="form-control"
+                name="year"
                 onChange={this.updateInput}
-                value={this.state.by}
-                dbName="groups"
-                fieldName="code">
-            </Dropdowns>
-            </MDBCol>
-            <MDBCol md="3">
-            <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Responsible
-            </label>
-            <Dropdowns 
-                className="form-control" 
-                name="responsible" 
-                default="(Please select the student group)"
-                onChange={this.updateInput}
-                value={this.state.responsible}
-                dbName="lecturers"
-                fieldName="id">
-            </Dropdowns>
-            </MDBCol>
+                value={this.state.year}
+               
+              />
           </MDBRow>
           
           <div className="text-center py-4 mt-3">
             <MDBBtn className="btn btn-outline-purple" type="submit">
-              Confirm
+              View Form
             <MDBIcon far icon="paper-plane" className="ml-2" />
             </MDBBtn>
             <hr></hr>
           </div>
         </form>
 
-        
-         
         <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
           <FormExist evacode={this.state.code}></FormExist>
-        </MDBCollapse>
-
-        <MDBCollapse id="basicCollapse1" isOpen={this.state.collapseID1}>
-          <FormNew evacode={this.state.code}></FormNew>
-        </MDBCollapse>
-                 
+        </MDBCollapse>                 
 
       </MDBContainer>
     );  

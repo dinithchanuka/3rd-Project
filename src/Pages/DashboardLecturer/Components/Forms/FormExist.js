@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../../../../Components/Firebase/Firebase';
+import Firebase from '../../../../Components/Firebase/Firebase';
+import Dropdowns from '../../../../Components/Dropdown/Dropdown';
 import { Button } from 'antd';
 
 import Topic from './Topic'
@@ -12,7 +13,38 @@ class FormExist extends React.Component {
          topics: [],
         };
     }
+
+    // componentDidMount() {
+    //   setTimeout(() => { this.getDetails()}, 5000);
+      
+    // }
+    componentDidUpdate(){
+      this.getDetails()
+    }
     
+    getDetails = () => {
+      const details = [];
+      var code = this.evacode.value
+      
+      if(code != ""){
+        var evaformsRef = Firebase.firestore().collection('evaforms').doc(code).collection('topics')
+        evaformsRef.get().then(collections => {
+          console.log('oooooo')
+          console.log(this.props.evacode)
+          console.log('col', collections);
+          const newTopics = [];
+          collections.forEach(collection => {
+            newTopics.push({
+              name: collection.data().name,
+              criterias: collection.data().criterias
+            });
+          });
+          console.log('new topics', newTopics);
+          this.setState({ topics: newTopics });
+        })
+      }
+      
+    }
     addTopic = () => {
       const topics = this.state.topics.slice();
       const newTopics = topics.concat([{ 
@@ -67,7 +99,7 @@ class FormExist extends React.Component {
       const db = Firebase.firestore();
 
       this.state.topics.forEach(topic => {
-        const r = db.collection('courseevaforms')
+        const r = db.collection('evaforms')
           .doc(this.props.evacode)
           .collection('topics')
           .doc(topic.num)
@@ -78,7 +110,7 @@ class FormExist extends React.Component {
     render(){
         return(
           <form onSubmit={this.handleSubmit}>
-          <h5 color="red">Evaluation Form is not included...</h5>
+          <h5 color="red">Form exists...</h5>
           <div>
             {this.state.topics.map((topic, idx) => (
               <Topic 
@@ -92,6 +124,7 @@ class FormExist extends React.Component {
                 criterias={this.state.topics[idx].criterias}
               ></Topic>
             ))}
+            <input type="hidden" name="id"  value={this.props.evacode} ref={(input) => { this.evacode = input }}/>
             <MDBRow>
               <MDBCol md = "3">
                 <Button type="primary" onClick={this.addTopic} >Add New Topic</Button>

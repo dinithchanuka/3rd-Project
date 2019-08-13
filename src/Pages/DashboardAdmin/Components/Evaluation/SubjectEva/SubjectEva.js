@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import FormExist from './FormExist';
 import FormNew from './FormNew';
 
-class CourseEva extends React.Component {
+class SubjectEva extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,32 +20,32 @@ class CourseEva extends React.Component {
      option2:"",     
     };
     this.updateInput = this.updateInput.bind(this)
-    this.addCourseEva = this.addCourseEva.bind(this)
+    this.addSubEva = this.addSubEva.bind(this)
   }
   updateInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  addCourseEva = e => {    
+  addSubEva = e => {    
     e.preventDefault();
     const db = Firebase.firestore();
     console.log(db);
     
-    const userRef = db.collection("courseevadetails").add({
+    const userRef = db.collection("subevadetails").add({
       name: this.state.lecid,
       code: this.state.code,
       by: this.state.by,
       responsible: this.state.responsible,
       year:this.state.year,
-      type: "Course",
+      type: "Subject",
     });
 
     this.handleForms();
   }
   handleForms = () => {
     var db = Firebase.firestore()
-    var ref = db.collection('courseevaforms').doc(this.state.code).collection('topics').doc('t-0')
+    var ref = db.collection('subevaforms').doc(this.state.code).collection('topics').doc('t-0')
     var getDoc = ref.get()
     .then(doc => {
       if(!doc.exists){
@@ -63,7 +63,7 @@ class CourseEva extends React.Component {
     
     const collapseID = "basicCollapse";
     const details = [];
-    var Ref = Firebase.firestore().collection('courseevaform')
+    var Ref = Firebase.firestore().collection('subevaform')
     var query = Ref.where('code', '==',this.state.code).get()
     .then(snapshot => {
       if (snapshot.empty) {
@@ -110,9 +110,9 @@ class CourseEva extends React.Component {
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addLecEva}> 
+        <form onSubmit={this.addSubEva}> 
           <MDBRow>
-            <h4>Course Evaluation</h4>
+            <h4>Subject Evaluation</h4>
           </MDBRow>
           <MDBRow>
             <MDBCol md="2">
@@ -154,15 +154,15 @@ class CourseEva extends React.Component {
                 htmlFor="defaultFormCardNameEx"
                 className="grey-text font-weight-light"
               >
-                Course Code
+                Subject Code
             </label>
               <Dropdowns 
                 className="form-control" 
                 name="lecid" 
-                default="Select a Course"
+                default="(Please select the course)"
                 onChange={this.updateInput}
                 value={this.state.course}
-                dbName="courses"
+                dbName="subjects"
                 fieldName="code">
               </Dropdowns>
             </MDBCol>
@@ -176,7 +176,7 @@ class CourseEva extends React.Component {
             <Dropdowns
                 className="form-control" 
                 name="by" 
-                default="Select Student Group"
+                default="(Please select the student group)"
                 onChange={this.updateInput}
                 value={this.state.by}
                 dbName="groups"
@@ -193,7 +193,7 @@ class CourseEva extends React.Component {
             <Dropdowns 
                 className="form-control" 
                 name="responsible" 
-                default="Select a Lecturer"
+                default="(Please select the student group)"
                 onChange={this.updateInput}
                 value={this.state.responsible}
                 dbName="lecturers"
@@ -211,8 +211,6 @@ class CourseEva extends React.Component {
           </div>
         </form>
 
-        
-         
         <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
           <FormExist evacode={this.state.code}></FormExist>
         </MDBCollapse>
@@ -221,10 +219,9 @@ class CourseEva extends React.Component {
           <FormNew evacode={this.state.code}></FormNew>
         </MDBCollapse>
                  
-
       </MDBContainer>
     );  
   };
 };
-export default CourseEva;
+export default SubjectEva;
 
