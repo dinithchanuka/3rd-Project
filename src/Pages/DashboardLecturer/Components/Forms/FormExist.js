@@ -14,10 +14,6 @@ class FormExist extends React.Component {
         };
     }
 
-    // componentDidMount() {
-    //   setTimeout(() => { this.getDetails()}, 5000);
-      
-    // }
     componentDidUpdate(){
       this.getDetails()
     }

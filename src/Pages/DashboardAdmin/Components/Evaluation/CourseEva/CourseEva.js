@@ -110,7 +110,7 @@ class CourseEva extends React.Component {
   render(){
     return (
       <MDBContainer>
-        <form onSubmit={this.addLecEva}> 
+        <form onSubmit={this.addCourseEva}> 
           <MDBRow>
             <h4>Course Evaluation</h4>
           </MDBRow>

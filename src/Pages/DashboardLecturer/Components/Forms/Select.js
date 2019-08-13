@@ -1,7 +1,7 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
 import Firebase from '../../../../Components/Firebase/Firebase';
-import Dropdowns from '../../../../Components/Dropdown/Dropdown';
+import DropdownWhere from '../../../../Components/Dropdown/DropdownWhere';
 
 import FormExist from './FormExist';
 
@@ -10,15 +10,57 @@ class CourseEva extends React.Component {
     super(props);
     this.state = {
      code:null,
+     id:null,
      lecid:"",
+     docid:"",
+     name:"",
      by:"",
      responsible:"",
      year:"",
      option1:"",
-     option2:"",     
+     option2:"", 
+     details:[],    
     };
     this.updateInput = this.updateInput.bind(this)
     this.addLecEva = this.addLecEva.bind(this)
+
+  }
+
+  componentDidMount(){
+    
+    var details = [];
+    var userEmail = localStorage.getItem('userEmail');
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", userEmail);
+    var lecref = Firebase.firestore().collection('lecturers')
+    var lecquery = lecref.where("email","==",userEmail).get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        // message
+        // .loading('Action in progress...',1)
+        // .th message.info('No matching document...'))
+        console.log(">>>>>>>>>>>>>>EMPTY<<<<<<<<<<<<<<<<<");
+        return;
+      }
+      // message
+      // .loading('Action in progress...',1);
+
+      snapshot.forEach((doc) =>{
+        const {id,name} = doc.data();
+        details.push({
+          key:doc.id,
+          id,
+          name
+        });
+      });
+
+      this.setState(prevState => ({
+        docid:details[0].key,
+        id:details[0].id,
+        name:details[0].name
+      }));
+      console.log(userEmail)
+      console.log("aa",this.state.id)
+    })
   }
   updateInput = e => {
     this.setState({
@@ -106,93 +148,114 @@ class CourseEva extends React.Component {
     }));
   }
   render(){
-    return (
-      <MDBContainer>
-        <form onSubmit={this.addLecEva}> 
-          <MDBRow>
-            <h4>Responsible Evaluation Forms</h4>
-          </MDBRow>
-          <MDBRow>
-            <MDBCol md="4">
+    if(this.state.id != null){
+      return (
+        <MDBContainer>
+          <form onSubmit={this.addLecEva}> 
+            <MDBRow>
+              <h4>Responsible Evaluation Forms</h4>
+            </MDBRow>
+            <MDBRow>
+              <MDBCol md="4">
+                <label
+                  htmlFor="defaultFormCardNameEx"
+                  className="grey-text font-weight-light"
+                >
+                  Subject
+                </label>
+                <DropdownWhere
+                  className="form-control" 
+                  name="lecid" 
+                  default="(Please select the course)"
+                  onChange={this.updateInput}
+                  value={this.state.course}
+                  dbName="subevadetails"
+                  fieldName="code"
+                  whereField="responsible"
+                  whereOp="=="
+                  whereValue={this.state.id}
+                  >
+                </DropdownWhere>
+              </MDBCol>
+              <MDBCol md="4">
+                <label
+                  htmlFor="defaultFormCardNameEx"
+                  className="grey-text font-weight-light"
+                >
+                  Lecturer
+                </label>
+                <DropdownWhere 
+                  className="form-control" 
+                  name="lecid" 
+                  default="(Please select the course)"
+                  onChange={this.updateInput}
+                  value={this.state.course}
+                  dbName="lecevadetails"
+                  fieldName="code"
+                  whereField="responsible"
+                  whereOp="=="
+                  whereValue={this.state.id}
+                  >
+                </DropdownWhere>
+              </MDBCol>
+              <MDBCol md="4">
               <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Subject
+                  htmlFor="defaultFormCardNameEx"
+                  className="grey-text font-weight-light"
+                >
+                  Course
               </label>
-              <Dropdowns 
-                className="form-control" 
-                name="lecid" 
-                default="(Please select the course)"
-                onChange={this.updateInput}
-                value={this.state.course}
-                dbName="lecturers"
-                fieldName="id">
-              </Dropdowns>
-            </MDBCol>
-            <MDBCol md="4">
-              <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Lecturer
-              </label>
-              <Dropdowns 
-                className="form-control" 
-                name="lecid" 
-                default="(Please select the course)"
-                onChange={this.updateInput}
-                value={this.state.course}
-                dbName="lecturers"
-                fieldName="id">
-              </Dropdowns>
-            </MDBCol>
-            <MDBCol md="4">
-            <label
-                htmlFor="defaultFormCardNameEx"
-                className="grey-text font-weight-light"
-              >
-                Course
-            </label>
-              <Dropdowns 
-                className="form-control" 
-                name="lecid" 
-                default="(Please select the course)"
-                onChange={this.updateInput}
-                value={this.state.course}
-                dbName="lecturers"
-                fieldName="id">
-              </Dropdowns>
-            </MDBCol>
+                <DropdownWhere 
+                  className="form-control" 
+                  name="lecid" 
+                  default="(Please select the course)"
+                  onChange={this.updateInput}
+                  value={this.state.course}
+                  dbName="courseevadetails"
+                  fieldName="code"
+                  whereField="responsible"
+                  whereOp="=="
+                  whereValue={this.state.id}
+                  >
+                </DropdownWhere>
+              </MDBCol>
+              
+            </MDBRow>
+            <MDBRow>
+            <input
+                  type="text"
+                  id="defaultFormCardNameEx"
+                  className="form-control"
+                  name="code"
+                  onChange={this.updateInput}
+                  value={this.state.code}
+                />
+            </MDBRow>
             
-          </MDBRow>
-          <MDBRow>
-          <input
-                type="text"
-                id="defaultFormCardNameEx"
-                className="form-control"
-                name="year"
-                onChange={this.updateInput}
-                value={this.state.year}
-               
-              />
-          </MDBRow>
-          
-          <div className="text-center py-4 mt-3">
-            <MDBBtn className="btn btn-outline-purple" type="submit">
-              View Form
-            <MDBIcon far icon="paper-plane" className="ml-2" />
-            </MDBBtn>
-            <hr></hr>
-          </div>
-        </form>
-
-        <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
-          <FormExist evacode={this.state.code}></FormExist>
-        </MDBCollapse>                 
-
-      </MDBContainer>
-    );  
+            <div className="text-center py-4 mt-3">
+              <MDBBtn className="btn btn-outline-purple" type="submit">
+                View Form
+              <MDBIcon far icon="paper-plane" className="ml-2" />
+              </MDBBtn>
+              <hr></hr>
+            </div>
+          </form>
+  
+          <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
+            <FormExist evacode={this.state.code}></FormExist>
+          </MDBCollapse>                 
+  
+        </MDBContainer>
+      );  
+    }
+    else{
+      return(
+        <div>
+          hgf
+        </div>
+      )
+    }
+    
   };
 };
 export default CourseEva;
