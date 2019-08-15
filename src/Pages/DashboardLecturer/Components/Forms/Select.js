@@ -83,9 +83,11 @@ class CourseEva extends React.Component {
 
     this.handleForms();
   }
-  handleForms = () => {
+  handleForms = (e) => {
+    e.preventDefault();
+    console.log("handleForms")
     var db = Firebase.firestore()
-    var ref = db.collection('evaforms').doc(this.state.code).collection('topics').doc('t-0')
+    var ref = db.collection('lecevaforms').doc(this.state.code).collection('topics').doc('t-0')
     var getDoc = ref.get()
     .then(doc => {
       if(!doc.exists){
@@ -103,7 +105,7 @@ class CourseEva extends React.Component {
     
     const collapseID = "basicCollapse";
     const details = [];
-    var Ref = Firebase.firestore().collection('evaform')
+    var Ref = Firebase.firestore().collection('lecevaform')
     var query = Ref.where('code', '==',this.state.code).get()
     .then(snapshot => {
       if (snapshot.empty) {
@@ -151,7 +153,7 @@ class CourseEva extends React.Component {
     if(this.state.id != null){
       return (
         <MDBContainer>
-          <form onSubmit={this.addLecEva}> 
+          <form onSubmit={this.handleForms}> 
             <MDBRow>
               <h4>Responsible Evaluation Forms</h4>
             </MDBRow>
@@ -165,8 +167,8 @@ class CourseEva extends React.Component {
                 </label>
                 <DropdownWhere
                   className="form-control" 
-                  name="lecid" 
-                  default="(Please select the course)"
+                  name="subid" 
+                  default="(Please select the Subject)"
                   onChange={this.updateInput}
                   value={this.state.course}
                   dbName="subevadetails"
@@ -187,9 +189,9 @@ class CourseEva extends React.Component {
                 <DropdownWhere 
                   className="form-control" 
                   name="lecid" 
-                  default="(Please select the course)"
+                  default="(Please select the Lecturer)"
                   onChange={this.updateInput}
-                  value={this.state.course}
+                  value={this.state.lecid}
                   dbName="lecevadetails"
                   fieldName="code"
                   whereField="responsible"
@@ -207,7 +209,7 @@ class CourseEva extends React.Component {
               </label>
                 <DropdownWhere 
                   className="form-control" 
-                  name="lecid" 
+                  name="courseid" 
                   default="(Please select the course)"
                   onChange={this.updateInput}
                   value={this.state.course}
@@ -242,7 +244,8 @@ class CourseEva extends React.Component {
           </form>
   
           <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
-            <FormExist evacode={this.state.code}></FormExist>
+            {console.log("1111111111111111111",this.state.lecid)}
+            <FormExist evacode={this.state.lecid}></FormExist>
           </MDBCollapse>                 
   
         </MDBContainer>
@@ -251,7 +254,7 @@ class CourseEva extends React.Component {
     else{
       return(
         <div>
-          hgf
+          
         </div>
       )
     }

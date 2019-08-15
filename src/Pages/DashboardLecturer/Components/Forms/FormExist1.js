@@ -1,6 +1,6 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon ,MDBCollapse,  MDBDropdownMenu, MDBDropdownItem} from 'mdbreact';
-import Firebase from '../../../../Components/Firebase/Firebase'
+import Firebase from '../../../../Components/Firebase/Firebase';
 import Dropdowns from '../../../../Components/Dropdown/Dropdown';
 import { Button } from 'antd';
 
@@ -14,17 +14,13 @@ class FormExist extends React.Component {
         };
     }
 
-    componentDidMount() {
-      setTimeout(() => { this.getDetails()}, 5000);
-      
+    componentDidUpdate(){
+      this.getDetails()
     }
-    // componentDidUpdate(){
-    //   this.getDetails()
-    // }
     
     getDetails = () => {
       const details = [];
-      var code = this.props.evacode
+      var code = this.evacode.value
       
       if(code){
         var evaformsRef = Firebase.firestore().collection('lecevaforms').doc(code).collection('topics')
@@ -32,15 +28,15 @@ class FormExist extends React.Component {
           console.log('oooooo')
           console.log(this.props.evacode)
           console.log('col', collections);
-          const newStudents = [];
+          const newTopics = [];
           collections.forEach(collection => {
-            newStudents.push({
+            newTopics.push({
               name: collection.data().name,
               criterias: collection.data().criterias
             });
           });
-          console.log('new topics', newStudents);
-          this.setState({ topics: newStudents });
+          console.log('new topics', newTopics);
+          this.setState({ topics: newTopics });
         })
       }
       

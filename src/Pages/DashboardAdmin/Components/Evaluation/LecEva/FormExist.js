@@ -32,15 +32,15 @@ class FormExist extends React.Component {
           console.log('oooooo')
           console.log(this.props.evacode)
           console.log('col', collections);
-          const newTopics = [];
+          const newStudents = [];
           collections.forEach(collection => {
-            newTopics.push({
+            newStudents.push({
               name: collection.data().name,
               criterias: collection.data().criterias
             });
           });
-          console.log('new topics', newTopics);
-          this.setState({ topics: newTopics });
+          console.log('new topics', newStudents);
+          this.setState({ topics: newStudents });
         })
       }
       

@@ -15,6 +15,10 @@ import CourseDetails from './Components/UserDetails/CourseDetails';
 import SubjectEva from './Components/Evaluation/SubjectEva/SubjectEva';
 import LecturerEva from './Components/Evaluation/LecEva/LecturerEva';
 import CourseEva from './Components/Evaluation/CourseEva/CourseEva';
+import SubjectFeedback from './Components/Feedback/SubjectFeedback/SubjectFeedback';
+import LecturerFeedback from './Components/Feedback/LecturerFeedback/LecturerFeedback';
+import CourseFeedback from './Components/Feedback/CourseFeedback/CourseFeedback';
+import Reports from './Components/Reports/Index';
 
 import {
     Layout, Menu, Breadcrumb, Icon,
@@ -95,6 +99,30 @@ import shadows from '@material-ui/core/styles/shadows';
       const CourseEva = this.state.CourseEva;
       this.setState(state => ({Menu:14}));
     }
+    handleSubjectFeedback = () => {
+      const SubjectFeedback = this.state.SubjectFeedback;
+      this.setState(state => ({Menu:15}));
+    }
+    handleLecturerFeedback = () => {
+      const LecturerFeedback = this.state.LecturerFeedback;
+      this.setState(state => ({Menu:16}));
+    }
+    handleCourseFeedback = () => {
+      const CourseFeedback = this.state.CourseFeedback;
+      this.setState(state => ({Menu:17}));
+    }
+    handleSubjectReports = () => {
+      const Reports = this.state.Reports;
+      this.setState(state => ({Menu:18}));
+    }
+    handleLecturerReports = () => {
+      const Reports = this.state.Reports;
+      this.setState(state => ({Menu:19}));
+    }
+    handleCourseReports = () => {
+      const Reports = this.state.Reports;
+      this.setState(state => ({Menu:20}));
+    }
   
     onCollapse = (collapsed) => {
       console.log(collapsed);
@@ -106,6 +134,8 @@ import shadows from '@material-ui/core/styles/shadows';
       let StudentRegs,LecturerRegs,SubjectRegs,CourseRegs,GroupRegs;
       let StudentDetailss,LecturerDetailss,SubjectDetailss,GroupDetailss,CourseDetailss;
       let SubjectEvas,LecturerEvas,CourseEvas;
+      let SubjectFeedbacks,LecturerFeedbacks,CourseFeedbacks;
+      let SubjectReportss,LecturerReportss,CourseReportss;
       
       if(this.state.Menu===1){
         Dashboards = (
@@ -205,6 +235,48 @@ import shadows from '@material-ui/core/styles/shadows';
           </div>
         )
       }
+      else if(this.state.Menu===15){
+        SubjectFeedbacks = (
+          <div>
+            <SubjectFeedback></SubjectFeedback>
+          </div>
+        )
+      }
+      else if(this.state.Menu===16){
+        LecturerFeedbacks = (
+          <div>
+            <LecturerFeedback></LecturerFeedback>
+          </div>
+        )
+      }
+      else if(this.state.Menu===17){
+        CourseFeedbacks = (
+          <div>
+            <CourseFeedback></CourseFeedback>
+          </div>
+        )
+      }
+      else if(this.state.Menu===18){
+        SubjectReportss = (
+          <div>
+            <Reports></Reports>
+          </div>
+        )
+      }
+      else if(this.state.Menu===19){
+        LecturerReportss = (
+          <div>
+            <Reports></Reports>
+          </div>
+        )
+      }
+      else if(this.state.Menu===20){
+        CourseReportss = (
+          <div>
+            <Reports></Reports>
+          </div>
+        )
+      }
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider
@@ -251,13 +323,21 @@ import shadows from '@material-ui/core/styles/shadows';
                 key="sub4"
                 title={<span><Icon type="team" /><span>Feedback</span></span>}
               >
-                <Menu.Item key="15">Lecture</Menu.Item>
-                <Menu.Item key="16">Subject</Menu.Item>
-                <Menu.Item key="17">Course</Menu.Item>
+                <Menu.Item key="15" onClick={this.handleSubjectFeedback}>Subject</Menu.Item>
+                <Menu.Item key="16" onClick={this.handleLecturerFeedback}>Lecturer</Menu.Item>
+                <Menu.Item key="17" onClick={this.handleCourseFeedback}>Course</Menu.Item>
               </SubMenu>
-              {/* <Menu.Item key="14">
+              <SubMenu
+                key="sub5"
+                title={<span><Icon type="team" /><span>Reports</span></span>}
+              >
+                <Menu.Item key="18" onClick={this.handleSubjectReports}>Subject</Menu.Item>
+                <Menu.Item key="19" onClick={this.handleLecturerReports}>Lecturer</Menu.Item>
+                <Menu.Item key="20" onClick={this.handleCourseReports}>Course</Menu.Item>
+              </SubMenu>
+              {/* <Menu.Item key="18" onClick={this.handleReports}>
                 <Icon type="file" />
-                <span>File</span>
+                <span>Reports</span>
               </Menu.Item> */}
             </Menu>
           </Sider>
@@ -280,6 +360,12 @@ import shadows from '@material-ui/core/styles/shadows';
               {SubjectEvas}
               {LecturerEvas}
               {CourseEvas}
+              {SubjectFeedbacks}
+              {LecturerFeedbacks}
+              {CourseFeedbacks}
+              {SubjectReportss}
+              {LecturerReportss}
+              {CourseReportss}
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Rowdy Design ©2019 Created by Dinith

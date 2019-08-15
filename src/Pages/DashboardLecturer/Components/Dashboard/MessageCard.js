@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import { Dialog } from '@material-ui/core';
 
-class SubjectCard extends Component {
+class MessageCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,8 +22,6 @@ class SubjectCard extends Component {
       this.setState({ open: false });
   };
     
- 
-
   render(){
     return (
       <MDBCol>
@@ -46,4 +44,4 @@ class SubjectCard extends Component {
     )
   }
 }
-export default SubjectCard; 
+export default MessageCard; 
